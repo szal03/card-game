@@ -17,8 +17,6 @@ state={
 }
 
 handleSingleGame=()=>{
-    console.log("single game");
-
     this.setState({
         singlePlayerActive: true,
         multiplayerActive: false,
@@ -26,7 +24,7 @@ handleSingleGame=()=>{
 }
 
     handleMultiGame=()=>{
-        console.log("single game");
+        console.log("multi game");
 
         this.setState({
             singlePlayerActive: false,
