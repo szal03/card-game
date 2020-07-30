@@ -12,7 +12,7 @@ class SinglePlayerMode extends React.Component{
             cardToAdd: [],
             newCard: '',
             newCardImg:'',
-
+            asTable:[]
         }
     }
 
@@ -32,6 +32,7 @@ class SinglePlayerMode extends React.Component{
     }
 
     cardsUserUpdate=()=>{
+        console.log(this.state.asTable.length);
         let cardToAdd=this.state.cardToAdd;
         let tmpArr = this.state.userCards;
         if(cardToAdd.value !== undefined){
@@ -40,8 +41,11 @@ class SinglePlayerMode extends React.Component{
                 userCards: tmpArr
             })
         }
+        if(this.state.asTable.length===2){
+            console.log(this.state.asTable.length);
+            console.log("CardsUSERUPDATE 2 ASY")
+        }
     }
-
 
     countPoints=(cardValueText)=>{
         let cardValue;
@@ -54,6 +58,29 @@ class SinglePlayerMode extends React.Component{
             cardValue=2;
         }
         return cardValue;
+    }
+
+    checkAs=(cardArray)=>{
+        const tmpArr = this.state.asTable;
+        const checkArray = cardArray.filter(item => item.value === "ACE");
+        console.log("checkArray1:"+checkArray);
+        console.log(checkArray.length);
+        if(checkArray.length>0){
+            tmpArr.concat(checkArray)
+            console.log("tmpArr checkAss"+ tmpArr);
+            this.setState({
+                asTable: tmpArr
+            })
+        }
+
+    }
+    checkCard=(card)=>{
+        const tmpArr = this.state.asTable;
+        if(card.value==="ACE"){
+            this.setState(prevState=>({
+                asTable: prevState.asTable.push(card)
+            }))
+        }
     }
 
     handleStartSingleGame=()=>{
@@ -69,6 +96,7 @@ class SinglePlayerMode extends React.Component{
             firstPoints = firstPoints+points;
             arr.push(firstCard);
         }
+        this.checkAs(arr);
         this.setState({
             userCards: arr,
             startSingleGame: true,
@@ -83,6 +111,7 @@ class SinglePlayerMode extends React.Component{
         let cardValue;
         let random = Math.floor(Math.random()*51);
         let actualAddingCard = this.state.cardsTable[random];
+        this.checkCard(actualAddingCard);
         let cardValueText = actualAddingCard.value;
         cardValue = this.countPoints(cardValueText);
         this.setState(prevstate=> ({
@@ -92,6 +121,7 @@ class SinglePlayerMode extends React.Component{
             cardToAdd: actualAddingCard
         }))
         this.cardsUserUpdate()
+
     }
 
     render(){

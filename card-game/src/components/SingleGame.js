@@ -2,7 +2,11 @@ import React from "react";
 
 
 const CardItem = (props)=>{
-    console.log(props)
+    console.log(props.cards)
+    const checkArray = props.cards.filter(item => item.value === "ACE");
+    console.log("checkArray:"+checkArray);
+    console.log(checkArray.length);
+
     const cards = props.cards.map(card=>(
         <div key={card.code}>
             <img src={card.image} alt={card.suit} />
