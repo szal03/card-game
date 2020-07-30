@@ -1,12 +1,8 @@
 import React from "react";
 
-
-const ModeButton = (props) =>{
+const ModeButton=(props)=>{
     return(
-        <div>
-            <button onClick={props.click}>{props.text}</button>
-        </div>
+        <button onClick={props.click}>{props.text}</button>
     )
 }
-
-export default ModeButton;
+export default ModeButton
