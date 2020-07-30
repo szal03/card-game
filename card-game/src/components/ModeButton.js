@@ -5,4 +5,4 @@ const ModeButton=(props)=>{
         <button onClick={props.click}>{props.text}</button>
     )
 }
-export default ModeButton
+export default ModeButton;
