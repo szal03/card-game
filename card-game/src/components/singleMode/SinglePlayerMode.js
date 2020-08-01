@@ -1,5 +1,6 @@
 import React from "react";
 import SingleGame from "./SingleGame";
+import SingleGameComputer from "./SingleGameComputer";
 
 class SinglePlayerMode extends React.Component{
 
@@ -13,6 +14,11 @@ class SinglePlayerMode extends React.Component{
             gameStart: false,
             gameWin: false,
             activePassButton: false,
+
+            computerCards:[],
+            computerPoints:0,
+            asTableComputer:[],
+            computerActive: false,
 
         }
     }
@@ -48,11 +54,34 @@ class SinglePlayerMode extends React.Component{
         }
     }
 
+    checkAsComputer=(card)=>{
+        const actualAsTable = this.state.asTableComputer;
+        if(card.value==="ACE"){
+            console.log("sprawdzam czy ta karta jest asem")
+            actualAsTable.push(card);
+            console.log(actualAsTable);
+            this.setState({
+                asTable: actualAsTable
+            })
+        }
+        if(this.state.asTableComputer.length===2){
+            console.log("sprawdzam ile jest asów w tabeli asowej")
+            this.setState({
+                gameWin: true,
+            })
+        }
+    }
+
     handleTwoRandomCards=()=>{
         let tmpArray=[];
         let cardValueText;
         let points;
         let pointsFromCards=0;
+        /* variables for computer */
+        let tmpForComputer=[];
+        let cardValueTextForComputer;
+        let pointsForComputer;
+        let pointsFromCardsForComputer=0;
         for(let i=0; i<=1; i++){
             let firstCardsIndex = Math.floor(Math.random()*51);
             let firstCard = this.state.cardDeckSingleGame[firstCardsIndex];
@@ -62,14 +91,26 @@ class SinglePlayerMode extends React.Component{
             pointsFromCards=pointsFromCards+points;
             this.checkAs(firstCard);
             tmpArray.push(firstCard);
+            /* for computer*/
+            let firstCardsForComputerIndex = Math.floor(Math.random()*51);
+            let firstCardForComputer = this.state.cardDeckSingleGame[firstCardsForComputerIndex];
+            cardValueTextForComputer=firstCardForComputer.value;
+            console.log(firstCardForComputer);
+            pointsForComputer = this.countPoints(cardValueTextForComputer);
+            pointsFromCardsForComputer=pointsFromCardsForComputer+pointsForComputer;
+
+            this.checkAsComputer(firstCardForComputer);
+            tmpForComputer.push(firstCardForComputer);
+
+
         }
-        console.log(tmpArray);
-        console.log(this.state.asTable);
-        console.log("punkty z 2 pierwszych kart"+pointsFromCards);
         this.setState({
             userCards: tmpArray,
             userPoints: pointsFromCards,
             gameStart: true,
+
+            computerCards:tmpForComputer,
+            computerPoints:pointsFromCardsForComputer,
         })
     }
 
@@ -94,29 +135,18 @@ class SinglePlayerMode extends React.Component{
 
     handlePassButton=()=>{
         console.log("handlePassButton");
-        const actualUserPoints = this.state.userPoints;
+
         this.setState({
             activePassButton: true,
+            computerActive: true,
         })
-        if(actualUserPoints===21){
-            console.log("Wygrana");
-        }
-        else if((21-actualUserPoints)<=3){
-            console.log("byłeś blisko wygranej");
-        }
-        else if(actualUserPoints>=22){
-            console.log("przegrałeś");
-        }
-        else{
-            console.log("za dużo brakuje do 21");
-        }
+
     }
 
-    /* two functions todo:
-    *  addingNewCard -> check isAs?, check(21 points for win, 22<= loose) and update points,
-    * passFunction -> check difference between current points and 21
-    *
-    * */
+    handleCheckScore=()=>{
+
+    }
+
 
     handleBackButtonSinglePlayerMode=()=>{
         this.setState({
@@ -124,6 +154,7 @@ class SinglePlayerMode extends React.Component{
             activePassButton: false,
         })
     }
+
     handleResetButton=()=>{
         this.setState({
             userCards:[],
@@ -132,21 +163,33 @@ class SinglePlayerMode extends React.Component{
             gameStart: false,
             gameWin: false,
             activePassButton: false,
+            computerCards:[],
+            computerPoints:0,
+            asTableComputer:[],
         })
         this.handleTwoRandomCards();
 
+    }
+
+    handleComputerProcedure=()=>{
+        if(this.state.computerActive===true){
+            
+        }
     }
 
     render(){
         const {backButton} = this.props;
         return(
             <div>SinglePlayerMode
-                {this.state.gameStart? <SingleGame
+                {this.state.gameStart? <div><SingleGame
                         buttonAdd={this.handleAddCard}
                     buttonPass={this.handlePassButton}
                     buttonBack={this.handleBackButtonSinglePlayerMode}
-                        buttonReset={this.handleResetButton}
-                    addButtonStatus={this.state.activePassButton}/>:
+                    buttonReset={this.handleResetButton}
+                    addButtonStatus={this.state.activePassButton}
+                    computerStatus={this.state.computerActive}
+                    computerStart={this.handleComputerProcedure}/>
+                </div>:
                     <div>
                         <button onClick={this.handleTwoRandomCards}>Rozpocznij grę</button>
                         <button onClick={backButton}>Powrót do menu</button>
