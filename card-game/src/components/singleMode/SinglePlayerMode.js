@@ -1,4 +1,5 @@
 import React from "react";
+import SingleGame from "./SingleGame";
 
 class SinglePlayerMode extends React.Component{
 
@@ -64,18 +65,57 @@ class SinglePlayerMode extends React.Component{
         }
         console.log(tmpArray);
         console.log(this.state.asTable);
-        this.setState(prevState=>({
-            userCards: prevState.userCards.concat(tmpArray),
-            userPoints: pointsFromCards
-        }))
+        this.setState({
+            userCards: tmpArray,
+            userPoints: pointsFromCards,
+            gameStart: true,
+        })
     }
 
+    handleAddCard=()=>{
+        console.log("handleAddCard");
+        let pointsFromAddingCard=0;
+        const deck = this.state.cardDeckSingleGame;
+        const actualUserCards = this.state.userCards;
+        let userPoints = this.state.userPoints;
+        let randomCardIndex = Math.floor(Math.random()*51);
+        let addingCard = deck[randomCardIndex];
+        this.checkAs(addingCard);
+        pointsFromAddingCard=this.countPoints(addingCard);
+        actualUserCards.push(addingCard);
+        userPoints=userPoints+pointsFromAddingCard;
+        this.setState({
+            userCards: actualUserCards,
+            userPoints: userPoints,
+        })
+
+    }
+
+    handlePassButton=()=>{
+        console.log("handlePassButton");
+        
+    }
+
+    /* two functions todo:
+    *  addingNewCard -> check isAs?, check(21 points for win, 22<= loose) and update points,
+    * passFunction -> check difference between current points and 21
+    *
+    * */
+
+    handleBackButtonSinglePlayerMode=()=>{
+        this.setState({
+            gameStart: false,
+        })
+    }
 
     render(){
         const {backButton} = this.props;
         return(
             <div>SinglePlayerMode
-                {this.state.gameStart? null:
+                {this.state.gameStart? <SingleGame
+                        buttonAdd={this.handleAddCard}
+                    buttonPass={this.handlePassButton}
+                    buttonBack={this.handleBackButtonSinglePlayerMode}/>:
                     <div>
                         <button onClick={this.handleTwoRandomCards}>Rozpocznij grę</button>
                         <button onClick={backButton}>Powrót do menu</button>
