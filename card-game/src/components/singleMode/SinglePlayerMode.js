@@ -12,7 +12,7 @@ class SinglePlayerMode extends React.Component{
             asTable:[],
             gameStart: false,
             gameWin: false,
-
+            activePassButton: false,
 
         }
     }
@@ -65,6 +65,7 @@ class SinglePlayerMode extends React.Component{
         }
         console.log(tmpArray);
         console.log(this.state.asTable);
+        console.log("punkty z 2 pierwszych kart"+pointsFromCards);
         this.setState({
             userCards: tmpArray,
             userPoints: pointsFromCards,
@@ -81,7 +82,7 @@ class SinglePlayerMode extends React.Component{
         let randomCardIndex = Math.floor(Math.random()*51);
         let addingCard = deck[randomCardIndex];
         this.checkAs(addingCard);
-        pointsFromAddingCard=this.countPoints(addingCard);
+        pointsFromAddingCard=this.countPoints(addingCard.value);
         actualUserCards.push(addingCard);
         userPoints=userPoints+pointsFromAddingCard;
         this.setState({
@@ -93,7 +94,22 @@ class SinglePlayerMode extends React.Component{
 
     handlePassButton=()=>{
         console.log("handlePassButton");
-        
+        const actualUserPoints = this.state.userPoints;
+        this.setState({
+            activePassButton: true,
+        })
+        if(actualUserPoints===21){
+            console.log("Wygrana");
+        }
+        else if((21-actualUserPoints)<=3){
+            console.log("byłeś blisko wygranej");
+        }
+        else if(actualUserPoints>=22){
+            console.log("przegrałeś");
+        }
+        else{
+            console.log("za dużo brakuje do 21");
+        }
     }
 
     /* two functions todo:
@@ -105,7 +121,20 @@ class SinglePlayerMode extends React.Component{
     handleBackButtonSinglePlayerMode=()=>{
         this.setState({
             gameStart: false,
+            activePassButton: false,
         })
+    }
+    handleResetButton=()=>{
+        this.setState({
+            userCards:[],
+            userPoints:0,
+            asTable:[],
+            gameStart: false,
+            gameWin: false,
+            activePassButton: false,
+        })
+        this.handleTwoRandomCards();
+
     }
 
     render(){
@@ -115,7 +144,9 @@ class SinglePlayerMode extends React.Component{
                 {this.state.gameStart? <SingleGame
                         buttonAdd={this.handleAddCard}
                     buttonPass={this.handlePassButton}
-                    buttonBack={this.handleBackButtonSinglePlayerMode}/>:
+                    buttonBack={this.handleBackButtonSinglePlayerMode}
+                        buttonReset={this.handleResetButton}
+                    addButtonStatus={this.state.activePassButton}/>:
                     <div>
                         <button onClick={this.handleTwoRandomCards}>Rozpocznij grę</button>
                         <button onClick={backButton}>Powrót do menu</button>
