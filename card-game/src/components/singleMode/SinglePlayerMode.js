@@ -18,7 +18,9 @@ class SinglePlayerMode extends React.Component{
             computerCards:[],
             computerPoints:0,
             asTableComputer:[],
-            computerActive: false,
+            computerActive: true,
+            activePassButtonComputer: false,
+            gameWinComputer: false,
 
         }
     }
@@ -61,20 +63,20 @@ class SinglePlayerMode extends React.Component{
             actualAsTable.push(card);
             console.log(actualAsTable);
             this.setState({
-                asTable: actualAsTable
+                asTableComputer: actualAsTable
             })
         }
         if(this.state.asTableComputer.length===2){
             console.log("sprawdzam ile jest asów w tabeli asowej")
             this.setState({
-                gameWin: true,
+                gameWinComputer: true,
             })
         }
     }
 
     handleTwoRandomCards=()=>{
         let tmpArray=[];
-        let cardValueText;
+        let cardValueText='';
         let points;
         let pointsFromCards=0;
         /* variables for computer */
@@ -127,26 +129,54 @@ class SinglePlayerMode extends React.Component{
         actualUserCards.push(addingCard);
         userPoints=userPoints+pointsFromAddingCard;
         this.setState({
-            userCards: actualUserCards,
-            userPoints: userPoints,
-        })
+                userCards: actualUserCards,
+                userPoints: userPoints,
+        })}
 
+    handleAddComputerCard=()=>{
+            let pointsFromAddingCard=0;
+            const deck = this.state.cardDeckSingleGame;
+            const actualComputerCards = this.state.computerCards;
+            let computerPoints = this.state.computerPoints;
+            let randomCardIndex = Math.floor(Math.random()*51);
+            let addingCard = deck[randomCardIndex];
+            this.checkAsComputer(addingCard);
+            pointsFromAddingCard=this.countPoints(addingCard.value);
+            actualComputerCards.push(addingCard);
+            computerPoints=computerPoints+pointsFromAddingCard;
+            this.setState({
+                computerCards: actualComputerCards,
+                computerPoints: computerPoints,
+            })
     }
 
     handlePassButton=()=>{
+        this.handleComputerProcedure();
         console.log("handlePassButton");
-
         this.setState({
             activePassButton: true,
-            computerActive: true,
+            //computerActive: true,
         })
 
     }
 
+
     handleCheckScore=()=>{
-
+        const userPoints=this.state.userPoints;
+        const computerPoints=this.state.computerPoints;
+        const winResult = 21;
+        const passUser = this.state.activePassButton;
+        const passComputer = this.state.activePassButtonComputer;
+        if(passUser===true && passComputer===true){
+            if(winResult-userPoints<winResult-computerPoints){
+                console.log("wygrał gracz1");
+                //set state => userWin
+            }else{
+                console.log("wygrał komputer");
+                //set state => computerWin
+            }
+        }
     }
-
 
     handleBackButtonSinglePlayerMode=()=>{
         this.setState({
@@ -172,9 +202,48 @@ class SinglePlayerMode extends React.Component{
     }
 
     handleComputerProcedure=()=>{
-        if(this.state.computerActive===true){
-            
+        let i=0;
+        let points = this.state.computerPoints;
+        while(this.state.computerActive===true){
+            i++;
+            if(points<=17){
+                this.handleAddComputerCard();
+                console.log(points);
+                break;
+            }
+            else if(points<=20){
+                let randomNumber = Math.floor(Math.random()*2);
+                console.log(randomNumber);
+               if(randomNumber===1){
+                   this.handleAddComputerCard();
+                   break;
+               }else{
+                   this.handleCheckScore();
+                   this.setState({
+                       computerActive: false,
+                       activePassButtonComputer: true,
+                   })
+                   break;
+               }
+                break;
+            }
+            else if(points === 21){
+                this.setState({
+                    computerActive: false,
+                    activePassButtonComputer: true,
+                })
+                this.handleCheckScore();
+                break;
+            }
+            else{
+                this.setState({
+                    computerActive: false,
+                    activePassButtonComputer: true,
+                })
+                break;
+            }
         }
+        console.log(i);
     }
 
     render(){
@@ -182,11 +251,13 @@ class SinglePlayerMode extends React.Component{
         return(
             <div>SinglePlayerMode
                 {this.state.gameStart? <div><SingleGame
-                        buttonAdd={this.handleAddCard}
+                    buttonAdd={this.handleAddCard}
                     buttonPass={this.handlePassButton}
                     buttonBack={this.handleBackButtonSinglePlayerMode}
                     buttonReset={this.handleResetButton}
                     addButtonStatus={this.state.activePassButton}
+                    userPoints={this.state.userPoints}
+                    computerPoints={this.state.computerPoints}
                     computerStatus={this.state.computerActive}
                     computerStart={this.handleComputerProcedure}/>
                 </div>:
