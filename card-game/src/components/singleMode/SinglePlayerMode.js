@@ -13,12 +13,14 @@ class SinglePlayerMode extends React.Component{
             asTable:[],
             gameStart: false,
             gameWin: false,
+            winPointsUser: false,
             activePassButton: false,
 
             computerCards:[],
             computerPoints:0,
             asTableComputer:[],
             computerActive: true,
+            winPointsComputer: false,
             activePassButtonComputer: false,
             gameWinComputer: false,
 
@@ -133,13 +135,21 @@ class SinglePlayerMode extends React.Component{
                 userPoints: userPoints,
         })}
 
-
     handlePassButton=()=>{
         this.handleComputerProcedure();
         console.log("handlePassButton");
-        this.setState({
-            activePassButton: true,
-        })
+        const userActualPoints=this.state.userPoints;
+        if(userActualPoints===21){
+            this.setState({
+                activePassButton: true,
+                winPointsUser: true,
+            })
+        }
+       else{
+            this.setState({
+                activePassButton: true,
+            })
+        }
 
     }
 
@@ -147,18 +157,23 @@ class SinglePlayerMode extends React.Component{
     handleCheckScore=()=>{
         const userPoints=this.state.userPoints;
         const computerPoints=this.state.computerPoints;
+        console.log("=================");
+        console.log(computerPoints);
+        console.log("=================");
         const winResult = 21;
-        const passUser = this.state.activePassButton;
-        console.log(passUser);
-        const passComputer = this.state.activePassButtonComputer;
-        console.log(passComputer);
-        console.log("handleCheckScore");
-        if(winResult-userPoints<winResult-computerPoints){
+        const userAbsPoints=Math.abs(winResult-userPoints);
+        const computerAbsPoints=Math.abs(winResult-computerPoints);
+        console.log(userAbsPoints);
+        console.log(computerAbsPoints);
+        if(userAbsPoints<computerAbsPoints){
             console.log("wygrał gracz1");
                 //set state => userWin
-        }else{
+        }else if(userAbsPoints>computerAbsPoints){
             console.log("wygrał komputer");
                 //set state => computerWin
+        }
+        else{
+            console.log("remis");
         }
 
     }
@@ -186,13 +201,18 @@ class SinglePlayerMode extends React.Component{
 
     }
 
+
+    componentDidUpdate() {
+        if(this.state.computerActive===false){
+            this.handleCheckScore()
+        }
+    }
+
     handleComputerProcedure=()=>{
-        let i=0;
         let points = this.state.computerPoints;
         const deck = this.state.cardDeckSingleGame;
         let actualComputerCards = this.state.computerCards;
         while(this.state.computerActive===true){
-            i++;
             if(points<=17){
                 let pointsFromAddingCard=0;
                 let randomCardIndex = Math.floor(Math.random()*51);
@@ -233,6 +253,7 @@ class SinglePlayerMode extends React.Component{
                     activePassButtonComputer: true,
                     computerCards: actualComputerCards,
                     computerPoints: points,
+                    winPointsComputer: true,
                 })
                 break;
             }
@@ -246,7 +267,6 @@ class SinglePlayerMode extends React.Component{
                 break;
             }
         }
-        this.handleCheckScore();
     }
 
     render(){
