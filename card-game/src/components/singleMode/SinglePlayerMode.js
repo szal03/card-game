@@ -15,6 +15,7 @@ class SinglePlayerMode extends React.Component{
             gameWin: false,
             winPointsUser: false,
             activePassButton: false,
+            activePassButtonStatus:false,
 
             computerCards:[],
             computerPoints:0,
@@ -23,7 +24,7 @@ class SinglePlayerMode extends React.Component{
             winPointsComputer: false,
             activePassButtonComputer: false,
             gameWinComputer: false,
-
+            remis: false,
         }
     }
 
@@ -154,9 +155,9 @@ class SinglePlayerMode extends React.Component{
     }
 
 
-    handleCheckScore=()=>{
+    handleCheckScore=(points)=>{
         const userPoints=this.state.userPoints;
-        const computerPoints=this.state.computerPoints;
+        const computerPoints=points;
         console.log("=================");
         console.log(computerPoints);
         console.log("=================");
@@ -165,16 +166,41 @@ class SinglePlayerMode extends React.Component{
         const computerAbsPoints=Math.abs(winResult-computerPoints);
         console.log(userAbsPoints);
         console.log(computerAbsPoints);
-        if(userAbsPoints<computerAbsPoints){
-            console.log("wygrał gracz1");
-                //set state => userWin
-        }else if(userAbsPoints>computerAbsPoints){
+        if(userPoints<22 && computerPoints<22){
+            if(userAbsPoints<computerAbsPoints){
+                console.log("wygrał gracz1");
+                this.setState({
+                    gameWin: true,
+                })
+            }else if(userAbsPoints>computerAbsPoints){
+                console.log("wygrał komputer");
+                this.setState({
+                    gameWinComputer: true,
+                })
+            }
+            else{
+                console.log("remis");
+                this.setState({
+                    remis: true,
+                })
+            }
+        }else if(userPoints>=22 && computerPoints<22){
             console.log("wygrał komputer");
-                //set state => computerWin
+            this.setState({
+                gameWinComputer: true,
+            })
+        }else if(computerPoints>=22 && userPoints<22){
+            console.log("wygrał gracz1");
+            this.setState({
+                gameWin: true,
+            })
+        }else{
+            console.log("oboje przegraliście");
+            this.setState({
+                remis: true,
+            })
         }
-        else{
-            console.log("remis");
-        }
+
 
     }
 
@@ -182,6 +208,20 @@ class SinglePlayerMode extends React.Component{
         this.setState({
             gameStart: false,
             activePassButton: false,
+            userCards:[],
+            userPoints:0,
+            asTable:[],
+            gameWin: false,
+            winPointsUser: false,
+
+            computerCards:[],
+            computerPoints:0,
+            asTableComputer:[],
+            computerActive: true,
+            winPointsComputer: false,
+            activePassButtonComputer: false,
+            gameWinComputer: false,
+            remis: false,
         })
     }
 
@@ -190,22 +230,27 @@ class SinglePlayerMode extends React.Component{
             userCards:[],
             userPoints:0,
             asTable:[],
-            gameStart: false,
+            gameStart: true,
             gameWin: false,
+            winPointsUser: false,
             activePassButton: false,
+
             computerCards:[],
             computerPoints:0,
             asTableComputer:[],
+            computerActive: true,
+            winPointsComputer: false,
+            activePassButtonComputer: false,
+            gameWinComputer: false,
+
+            remis: false,
         })
-        this.handleTwoRandomCards();
 
     }
 
-
-    componentDidUpdate() {
-        if(this.state.computerActive===false){
-            this.handleCheckScore()
-        }
+    handlePlayAgain=()=>{
+       this.handleResetButton()
+        setInterval(this.handleTwoRandomCards(), 3000);
     }
 
     handleComputerProcedure=()=>{
@@ -267,6 +312,7 @@ class SinglePlayerMode extends React.Component{
                 break;
             }
         }
+        this.handleCheckScore(points);
     }
 
     render(){
@@ -277,12 +323,15 @@ class SinglePlayerMode extends React.Component{
                     buttonAdd={this.handleAddCard}
                     buttonPass={this.handlePassButton}
                     buttonBack={this.handleBackButtonSinglePlayerMode}
-                    buttonReset={this.handleResetButton}
+                    buttonPlayAgain={this.handlePlayAgain}
                     addButtonStatus={this.state.activePassButton}
+                    passButtonStatus={this.state.activePassButtonStatus}
                     userPoints={this.state.userPoints}
+                    userWin={this.state.gameWin}
                     computerPoints={this.state.computerPoints}
-                    computerStatus={this.state.computerActive}
-                    computerStart={this.handleComputerProcedure}/>
+                    computerStart={this.handleComputerProcedure}
+                    computerWin={this.state.gameWinComputer}
+                    remis={this.state.remis}/>
                 </div>:
                     <div>
                         <button onClick={this.handleTwoRandomCards}>Rozpocznij grę</button>
