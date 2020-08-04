@@ -1,0 +1,63 @@
+@keyframes cardMove {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.gameTitle{
+    margin-top: 0;
+    transition: 0.4s;
+}
+.backButtonBox{
+    text-align: left;
+}
+.userCardContainer{
+    display: flex;
+}
+
+.userCardContainer{
+
+}
+
+.imgBox{
+    width: 10%;
+    transition: 0.4s;
+}
+.imgBox:hover{
+    width: 15%;
+    transition: 0.4s;
+    /*animation: cardMove; transition(all 2s cubic-bezier(.21,1,.84,1.01) );*/
+
+}
+.img:first-child img{
+    animation: cardMove;
+    animation-duration: 1s;
+}
+.imgBox:last-child img{
+    animation: cardMove;
+    animation-duration: 2s;
+}
+
+.gameButtons{
+    border-radius: 4px;
+    background: transparent;
+    border: 2px solid #233329;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 22px;
+    padding: 20px;
+    transition: all 0.8s;
+    cursor: pointer;
+}
+.gameButtons span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.4s;
+}
+.gameButtons:hover{
+    background: linear-gradient(to right, #233329, #63D471);
+}

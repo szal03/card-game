@@ -1,6 +1,5 @@
 import React from "react";
 import SingleGame from "./SingleGame";
-import SingleGameComputer from "./SingleGameComputer";
 import '../style/ModeButton.css'
 
 class SinglePlayerMode extends React.Component{
@@ -154,7 +153,6 @@ class SinglePlayerMode extends React.Component{
         }
 
     }
-
 
     handleCheckScore=(points)=>{
         const userPoints=this.state.userPoints;
@@ -319,25 +317,32 @@ class SinglePlayerMode extends React.Component{
     render(){
         const {backButton} = this.props;
         return(
-            <div><h1>Rozgrywka dla pojedyńczego gracza</h1>
-                {this.state.gameStart? <div><SingleGame
-                    buttonAdd={this.handleAddCard}
-                    buttonPass={this.handlePassButton}
-                    buttonBack={this.handleBackButtonSinglePlayerMode}
-                    buttonPlayAgain={this.handlePlayAgain}
-                    addButtonStatus={this.state.activePassButton}
-                    passButtonStatus={this.state.activePassButtonStatus}
-                    userPoints={this.state.userPoints}
-                    userWin={this.state.gameWin}
-                    computerPoints={this.state.computerPoints}
-                    computerStart={this.handleComputerProcedure}
-                    computerWin={this.state.gameWinComputer}
-                    remis={this.state.remis}/>
-                </div>:
-                    <div className="buttonsContainer">
-                        <button className='modeButton' onClick={this.handleTwoRandomCards}><span>Rozpocznij grę</span></button>
-                        <button className='modeButtonBack' onClick={backButton}><span>Powrót do menu</span></button>
-                    </div>}
+            <div className="mainContianer" style={{marginTop: '1vh'}}>
+                <div className="gameTitle" >
+                    <h1>Rozgrywka dla pojedyńczego gracza</h1>
+                </div>
+                <div className="contentContainer">
+                    {this.state.gameStart? <div><SingleGame
+                            buttonAdd={this.handleAddCard}
+                            buttonPass={this.handlePassButton}
+                            buttonBack={this.handleBackButtonSinglePlayerMode}
+                            buttonPlayAgain={this.handlePlayAgain}
+                            addButtonStatus={this.state.activePassButton}
+                            passButtonStatus={this.state.activePassButtonStatus}
+                            userCards={this.state.userCards}
+                            userPoints={this.state.userPoints}
+                            userWin={this.state.gameWin}
+                            computerPoints={this.state.computerPoints}
+                            computerStart={this.handleComputerProcedure}
+                            computerWin={this.state.gameWinComputer}
+                            remis={this.state.remis}/>
+                        </div>:
+                        <div className="buttonsContainer">
+                            <button className='modeButton' onClick={this.handleTwoRandomCards}><span>Rozpocznij grę</span></button>
+                            <button className='modeButtonBack' onClick={backButton}><span>Powrót do menu</span></button>
+                        </div>}
+                </div>
+
 
             </div>
         )

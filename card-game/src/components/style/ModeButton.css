@@ -1,7 +1,7 @@
 
 .modeButton, .modeButtonBack {
     border-radius: 4px;
-    background: linear-gradient(to right, #233329, #63D471) !important;
+    background: linear-gradient(to right, #233329, #63D471);
     border: none;
     color: #FFFFFF;
     text-align: center;

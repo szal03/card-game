@@ -187,8 +187,6 @@ class MultiPlayerMode extends React.Component{
             usersTable[id].userPoints = selectUserPoints;
             usersTable[id].userCards = selectUserCards;
             usersTable[id].asTable=selectUserAsTable;
-            usersTable[id].gameWin = selectUserGameWin;
-            usersTable[id].userActiveStatus=selectUserActiveStatus;
             this.setState({
                 usersTable: usersTable
             })
@@ -211,11 +209,14 @@ class MultiPlayerMode extends React.Component{
             console.log(winer);
             console.log("========");
             const winer2=usersTableActive.filter(status=>!status.gameLose);
+            console.log("========");
+            console.log(winer2);
+            console.log("========");
             if(winer.length===0 && winer2.length>1){
                 let compareTable = [];
                 let diff=0;
                 for(let i=0;i<=usersTableActive.length-1;i++){
-                    let tmpPlayerPoints=usersTableActive[i].userPoints;
+                    let tmpPlayerPoints=winer2[i].userPoints;
                     diff=21-tmpPlayerPoints;
                     compareTable.push(diff)
                 }
@@ -228,7 +229,7 @@ class MultiPlayerMode extends React.Component{
                     }
                 }
                 console.log(index);
-                let selectWiner = usersTableActive[index];
+                let selectWiner = winer2[index];
                 let selectWinername=selectWiner.name;
                 let selectWinergameWin=selectWiner.gameWin;
                 this.setState({
@@ -236,19 +237,22 @@ class MultiPlayerMode extends React.Component{
                     gameWiner:selectWinername,
                 })
             }
+            else{ //todo to fix !!!! co się dzieje kiedy ostatni user wciśnie pass? przerób jeszcze raz tą funkcje
+                let selectPlayer = usersTableActive[id];
+                let nextPlayer = usersTableActive[id+1];
+                let playerStatus=selectPlayer.userActiveStatus;
+                let nextPlayerStatus=nextPlayer.userActiveStatus;
+                playerStatus=false;
+                nextPlayerStatus=true;
+                usersTableActive[id].userActiveStatus = playerStatus;
+                usersTableActive[id+1].userActiveStatus = nextPlayerStatus;
+                this.setState({
+                    usersTable: usersTableActive
+                })
+            }
           //co jak ktoś ma po tyle samo pkt?
         }else{
-            let selectPlayer = usersTableActive[id];
-            let nextPlayer = usersTableActive[id+1];
-            let playerStatus=selectPlayer.userActiveStatus;
-            let nextPlayerStatus=nextPlayer.userActiveStatus;
-            playerStatus=false;
-            nextPlayerStatus=true;
-            usersTableActive[id].userActiveStatus = playerStatus;
-            usersTableActive[id+1].userActiveStatus = nextPlayerStatus;
-            this.setState({
-                usersTable: usersTableActive
-            })
+
         }
 
 
@@ -265,6 +269,8 @@ class MultiPlayerMode extends React.Component{
         const n=this.state.numberOfUsers;
         this.createPlayers(n);
         this.setState({
+            gameStart:false,
+            submit: false,
             gameEnd:false,
             gameWiner:'',
         })
