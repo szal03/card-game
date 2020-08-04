@@ -1,31 +1,4 @@
-/*
-.modeButton{
-    color: white;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    background: transparent;
-    padding: 20px;
-    border-radius: 5px;
-    display: inline-block;
-    border-color:black;
-    border-width: 2px;
-    border-style: solid;
-    transition: all 0.4s ease 0s;
-}
-.modeButton:hover{
-    color: #ffffff;
-    background: #fcad26;
-    border-color: #fcad26;
-    letter-spacing: 2px;
-    font-weight: 500;
-    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-    transition: all 0.4s ease 0s;
-}
 
-*/
 .modeButton, .modeButtonBack {
     border-radius: 4px;
     background: linear-gradient(to right, #233329, #63D471) !important;
