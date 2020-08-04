@@ -1,9 +1,10 @@
 import React from "react";
 
 const PlayerCards=(props)=>{
-    console.log(props.cards);
+    let randomNumber = Math.floor(Math.random()*100);
+    let secondNrandomNumber = Math.floor(Math.random()*1000);
     const userCards=props.cards.map(card=>(
-        <div key={card.code}>
+        <div key={card.code + randomNumber+secondNrandomNumber}>
             {card.suit}
         </div>
     ))
@@ -12,7 +13,6 @@ const PlayerCards=(props)=>{
 }
 
 const Player=(props)=>{
-    console.log(props.players);
     const players=props.players.map(player =>(
         <div key={player.userId}>
             <span>{player.name}</span>
@@ -21,8 +21,10 @@ const Player=(props)=>{
                 <PlayerCards cards={player.userCards}/>
             </div>
             <div>
-                <button onClick={()=>props.addButton(player.userId)}>Pobierz kartę</button>
-                <button>Pass</button>
+                <button disabled={!player.userActiveStatus}
+                        onClick={()=>props.addButton(player.userId)}>Pobierz kartę</button>
+                <button disabled={!player.userActiveStatus}
+                onClick={()=>props.passButton(player.userId)}>Pass</button>
             </div>
         </div>
     ))
@@ -31,12 +33,21 @@ const Player=(props)=>{
 
 
 const MultiGame=(props)=>{
-    const {usersTable, addButton}=props;
+    const {usersTable,
+        addButton,
+        passButton,
+        gameEnd,
+        gameWiner,
+        backButton,
+    buttonPlayAgain, persianEye}=props;
     return(
         <div>
-            multigame
             <Player players={usersTable}
-                    addButton={addButton}/>
+                    addButton={addButton}
+                    passButton={passButton}/>
+            {gameEnd? <div>Wygrał {gameWiner}<button onClick={buttonPlayAgain}>Zagraj ponownie</button></div>:null}
+            {persianEye? <div><h1>Perskie oczko!</h1></div>:null}
+            <button onClick={backButton}>Powrót</button>
         </div>
     )
 }

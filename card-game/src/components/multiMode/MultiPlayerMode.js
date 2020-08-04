@@ -12,6 +12,9 @@ class MultiPlayerMode extends React.Component{
             usersTable:[],
             submit: false,
             gameStart: false,
+            gameEnd:false,
+            gameWiner:'',
+            persianEye:false,
         }
     }
 
@@ -48,6 +51,10 @@ class MultiPlayerMode extends React.Component{
             let pointsFromCards=0;
             let actualAsTable=[];
             let win=false;
+            let active=false;
+            if(i==0){
+                active=true;
+            }
             for(let j=0;j<=1;j++){
                 let firstCardsIndex = Math.floor(Math.random()*51);
                 let firstCard = this.state.cardDeckMultiGame[firstCardsIndex];
@@ -59,13 +66,27 @@ class MultiPlayerMode extends React.Component{
                }
                if(actualAsTable.length===2){
                    win=true;
+                   this.setState({
+                       persianEye:true,
+                       gameEnd:true,
+                       gameWiner: `Gracz ${i+1}`,
+                   })
                }
                 arrayForCards.push(firstCard);
             }
             table.push({
-                userId:i, name:`Gracz ${i+1}`,userCards:arrayForCards,asTable:actualAsTable,userPoints:pointsFromCards,userActiveStatus:false,gameWin:win,
+                userId:i, name:`Gracz ${i+1}`,userCards:arrayForCards,asTable:actualAsTable,userPoints:pointsFromCards,userActiveStatus:active,gameWin:win, gameLose:false,
             })
         }
+      /*  const checkarr = table.filter(winner=>winner.gameWin);
+        if(checkarr.length!=0){
+            console.log("perskie oczko!");
+            console.log(checkarr);
+            this.setState({
+                gameEnd:false,
+                persianEye:true,
+            })
+        }*/
         console.log(table);
         this.setState({
             usersTable: table
@@ -82,22 +103,177 @@ class MultiPlayerMode extends React.Component{
     }
 
     handleGameStart=()=>{
-        let newArr = this.state.usersTable;
-        newArr[0].userActiveStatus=true;
         this.setState({
             gameStart:true,
-            usersTable: newArr,
         })
     }
 
+    handleEndGame=()=>{
+        let table = this.state.usersTable;
+        for(let i=0;i<=table.length-1;i++){
+                table[i].userActiveStatus=false;
+        }
+        this.setState({
+                userTable:table,
+        })
+
+    }
+
     handleAddCardButton=(id)=>{
-        console.log("add button "+id);
+        let usersTable = this.state.usersTable;
+        let selectPlayer = usersTable[id];
+        let selectUserPoints = selectPlayer.userPoints;
+        let selectUserCards=selectPlayer.userCards;
+        let selectUserAsTable=selectPlayer.asTable;
+        let selectUserGameWin=selectPlayer.gameWin;
+        let selectUserActiveStatus=selectPlayer.userActiveStatus;
+        let pointsFromCard=0;
+        const deck = this.state.cardDeckMultiGame;
+        let randomCardIndex = Math.floor(Math.random()*51);
+        let addingCard = deck[randomCardIndex];
+        pointsFromCard=this.countPoints(addingCard.value);
+        selectUserPoints=selectUserPoints+pointsFromCard;
+        if(addingCard.value==="ACE"){
+            selectUserAsTable.push(addingCard);
+        }
+        selectUserCards.push(addingCard);
+        if(selectUserPoints === 21){
+            selectUserGameWin=true;
+            let playerStatus=selectPlayer.userActiveStatus;
+            playerStatus=false;
+            usersTable[id].userActiveStatus=playerStatus;
+            usersTable[id].userPoints = selectUserPoints;
+            usersTable[id].userCards = selectUserCards;
+            usersTable[id].asTable=selectUserAsTable;
+            usersTable[id].gameWin = selectUserGameWin;
+            usersTable[id].userActiveStatus=selectUserActiveStatus;
+            this.setState({
+                gameEnd:true,
+                gameWiner:selectPlayer.name,
+                usersTable: usersTable,
+            })
+            this.handleEndGame()
+        }
+        else if(selectUserAsTable.length==2){
+            selectUserGameWin=true;
+            usersTable[id].userPoints = selectUserPoints;
+            usersTable[id].userCards = selectUserCards;
+            usersTable[id].asTable=selectUserAsTable;
+            usersTable[id].gameWin = selectUserGameWin;
+            usersTable[id].userActiveStatus=selectUserActiveStatus;
+            this.setState({
+                gameEnd:true,
+                gameWiner:selectPlayer.name,
+                usersTable: usersTable,
+                persianEye:true,
+            })
+            this.handleEndGame()
+        }
+        else if(selectUserPoints>=22 && selectUserAsTable.length!==2){
+            selectUserGameWin=false;
+            selectUserActiveStatus=false;
+            usersTable[id].userPoints = selectUserPoints;
+            usersTable[id].userCards = selectUserCards;
+            usersTable[id].asTable=selectUserAsTable;
+            usersTable[id].gameWin = selectUserGameWin;
+            usersTable[id].userActiveStatus=selectUserActiveStatus;
+            usersTable[id].gameLose=true;
+            usersTable[id+1].userActiveStatus=true;
+            this.setState({
+                usersTable: usersTable
+            })
+        }
+        else{
+            usersTable[id].userPoints = selectUserPoints;
+            usersTable[id].userCards = selectUserCards;
+            usersTable[id].asTable=selectUserAsTable;
+            usersTable[id].gameWin = selectUserGameWin;
+            usersTable[id].userActiveStatus=selectUserActiveStatus;
+            this.setState({
+                usersTable: usersTable
+            })
+        }
+    }
+
+    handlePassButton=(id)=>{
+        let usersTableActive = this.state.usersTable;
+        if(id+1 === usersTableActive.length){
+            //też ustawić status disable
+            let selectPlayer = usersTableActive[id];
+            let playerStatus=selectPlayer.userActiveStatus;
+            playerStatus=false;
+            usersTableActive[id].userActiveStatus = playerStatus;
+            this.setState({
+                usersTable: usersTableActive
+            })
+            const winer = usersTableActive.filter(status=>status.gameWin &&  !status.gameLose);
+            console.log("========");
+            console.log(winer);
+            console.log("========");
+            const winer2=usersTableActive.filter(status=>!status.gameLose);
+            if(winer.length===0 && winer2.length>1){
+                let compareTable = [];
+                let diff=0;
+                for(let i=0;i<=usersTableActive.length-1;i++){
+                    let tmpPlayerPoints=usersTableActive[i].userPoints;
+                    diff=21-tmpPlayerPoints;
+                    compareTable.push(diff)
+                }
+                let firstValue=compareTable[0]
+                let index=0;
+                for(let i=1;i<=compareTable.length;i++){
+                    if(compareTable[i]<firstValue){
+                        firstValue=compareTable[i];
+                        index=i;
+                    }
+                }
+                console.log(index);
+                let selectWiner = usersTableActive[index];
+                let selectWinername=selectWiner.name;
+                let selectWinergameWin=selectWiner.gameWin;
+                this.setState({
+                    gameEnd:true,
+                    gameWiner:selectWinername,
+                })
+            }
+          //co jak ktoś ma po tyle samo pkt?
+        }else{
+            let selectPlayer = usersTableActive[id];
+            let nextPlayer = usersTableActive[id+1];
+            let playerStatus=selectPlayer.userActiveStatus;
+            let nextPlayerStatus=nextPlayer.userActiveStatus;
+            playerStatus=false;
+            nextPlayerStatus=true;
+            usersTableActive[id].userActiveStatus = playerStatus;
+            usersTableActive[id+1].userActiveStatus = nextPlayerStatus;
+            this.setState({
+                usersTable: usersTableActive
+            })
+        }
+
+
+    }
+
+    handleBackButton=()=>{
+        this.setState({
+            gameStart:false,
+            submit: false,
+        })
+    }
+
+    handlePlayAgain=()=>{
+        const n=this.state.numberOfUsers;
+        this.createPlayers(n);
+        this.setState({
+            gameEnd:false,
+            gameWiner:'',
+        })
 
     }
 
     render(){
         const {backButton} = this.props;
-        const {submit, gameStart, usersTable}=this.state;
+        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye}=this.state;
         return(
             <div>Rozgrywka dla wielu graczy
                 {!gameStart?  <div> <form onSubmit={this.handleSubmit} noValidate>
@@ -120,7 +296,14 @@ class MultiPlayerMode extends React.Component{
                     <button onClick={backButton}>Powrót do menu</button>
                     </div></div>:<MultiGame
                     usersTable={usersTable}
-                addButton={this.handleAddCardButton}/>}
+                addButton={this.handleAddCardButton}
+                passButton={this.handlePassButton}
+                gameEnd={gameEnd}
+                gameWiner={gameWiner}
+                backButton={this.handleBackButton}
+                buttonPlayAgain={this.handlePlayAgain}
+                persianEye={persianEye}
+                />}
 
 
             </div>
