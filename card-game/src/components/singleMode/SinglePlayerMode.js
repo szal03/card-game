@@ -1,6 +1,7 @@
 import React from "react";
 import SingleGame from "./SingleGame";
 import SingleGameComputer from "./SingleGameComputer";
+import '../style/ModeButton.css'
 
 class SinglePlayerMode extends React.Component{
 
@@ -318,7 +319,7 @@ class SinglePlayerMode extends React.Component{
     render(){
         const {backButton} = this.props;
         return(
-            <div>SinglePlayerMode
+            <div><h1>Rozgrywka dla pojedyńczego gracza</h1>
                 {this.state.gameStart? <div><SingleGame
                     buttonAdd={this.handleAddCard}
                     buttonPass={this.handlePassButton}
@@ -333,9 +334,9 @@ class SinglePlayerMode extends React.Component{
                     computerWin={this.state.gameWinComputer}
                     remis={this.state.remis}/>
                 </div>:
-                    <div>
-                        <button onClick={this.handleTwoRandomCards}>Rozpocznij grę</button>
-                        <button onClick={backButton}>Powrót do menu</button>
+                    <div className="buttonsContainer">
+                        <button className='modeButton' onClick={this.handleTwoRandomCards}><span>Rozpocznij grę</span></button>
+                        <button className='modeButtonBack' onClick={backButton}><span>Powrót do menu</span></button>
                     </div>}
 
             </div>

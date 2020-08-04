@@ -54,12 +54,15 @@ state={
       const multiModeText = "Wielu graczy";
       return (
           <div className="App">
+              <div className="AppContent">
               {
                   this.state.singleMode===false && this.state.multiMode===false ?
                       <div>
                           <h1>Wybierz tryb gry</h1>
-                          <ModeButton text={singleModeText} click={this.handleSingleGame}/>
-                          <ModeButton text={multiModeText} click={this.handleMultiGame}/>
+                          <div className="buttonsContainer">
+                              <ModeButton text={singleModeText} click={this.handleSingleGame}/>
+                              <ModeButton text={multiModeText} click={this.handleMultiGame}/>
+                          </div>
                       </div>
                       : null
               }
@@ -69,6 +72,7 @@ state={
               {this.state.multiMode ? <MultiPlayerMode
                   backButton={this.handleBackButton}
                   deck={this.state.cardDeck}/> : null}
+              </div>
           </div>
       );
   }

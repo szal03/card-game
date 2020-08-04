@@ -1,0 +1,82 @@
+/*
+.modeButton{
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    background: transparent;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border-color:black;
+    border-width: 2px;
+    border-style: solid;
+    transition: all 0.4s ease 0s;
+}
+.modeButton:hover{
+    color: #ffffff;
+    background: #fcad26;
+    border-color: #fcad26;
+    letter-spacing: 2px;
+    font-weight: 500;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
+
+*/
+.modeButton, .modeButtonBack {
+    border-radius: 4px;
+    background: linear-gradient(to right, #233329, #63D471) !important;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 22px;
+    padding: 20px;
+    transition: all 0.4s;
+    cursor: pointer;
+}
+.modeButton span, .modeButtonBack span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.4s;
+}
+.modeButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.modeButton:hover span {
+    padding-right: 25px;
+}
+.modeButton:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+/* backmodeButton*/
+.modeButtonBack span:after {
+    content: '\00AB';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -20px;
+    transition: 0.5s;
+}
+.modeButtonBack:hover span {
+    padding-left: 25px;
+}
+.modeButtonBack:hover span:after {
+    opacity: 1;
+    left: 0;
+}
+
+
+
+/*00AB*/
+
