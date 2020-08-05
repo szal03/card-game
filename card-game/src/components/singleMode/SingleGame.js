@@ -4,10 +4,8 @@ import '../style/SingleGame.css'
 
 
 const PlayerCards=(props)=>{
-    let randomNumber = Math.floor(Math.random()*100);
-    let secondNrandomNumber = Math.floor(Math.random()*1000);
-    const userCards=props.cards.map(card=>(
-        <div key={card.code + randomNumber+secondNrandomNumber} className="imgBox">
+    const userCards=props.cards.map((card,index)=>(
+        <div key={index} className="imgBox">
             <img src={card.image} alt={card.suit}/>
         </div>
     ))
@@ -38,13 +36,17 @@ const SingleGame=(props)=>{
             </div>
             {userWin? <div>
                 <h1>Wygrał gracz1</h1>
-                <button onClick={buttonPlayAgain}>Zagraj ponownie</button>
+                <button className="gameButtons"
+                        onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
                 </div>: null}
             {computerWin? <div><h1>Wygrał Komputer</h1>
                 <button className="gameButtons"
                         onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
             </div>: null}
-            {remis? <div><h1>Remis</h1> <button onClick={buttonPlayAgain}>Zagraj ponownie</button></div>:null}
+            {remis? <div><h1>Remis</h1>
+                <button className="gameButtons"
+                        onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
+            </div>:null}
             <div className="userContainer">
                 <h1>Gracz</h1>
                 <div className="userCardContainer">

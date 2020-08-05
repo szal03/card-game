@@ -55,6 +55,7 @@ class SinglePlayerMode extends React.Component{
             console.log("sprawdzam ile jest asów w tabeli asowej")
             this.setState({
                 gameWin: true,
+                activePassButton: true
             })
         }
     }
@@ -131,6 +132,17 @@ class SinglePlayerMode extends React.Component{
         pointsFromAddingCard=this.countPoints(addingCard.value);
         actualUserCards.push(addingCard);
         userPoints=userPoints+pointsFromAddingCard;
+        if(userPoints===21){
+            this.setState({
+                gameWin: true,
+                activePassButton: true
+            })
+        }else if(userPoints>=22 && this.state.asTable.length!==2){
+            this.setState({
+                gameWinComputer: true,
+                activePassButton: true,
+            })
+        }
         this.setState({
                 userCards: actualUserCards,
                 userPoints: userPoints,
@@ -244,12 +256,11 @@ class SinglePlayerMode extends React.Component{
 
             remis: false,
         })
-
     }
 
     handlePlayAgain=()=>{
-       this.handleResetButton()
-        setInterval(this.handleTwoRandomCards(), 3000);
+      this.handleResetButton();
+      setInterval(this.handleTwoRandomCards(), 3000);
     }
 
     handleComputerProcedure=()=>{

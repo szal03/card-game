@@ -1,10 +1,8 @@
 import React from "react";
 
 const PlayerCards=(props)=>{
-    let randomNumber = Math.floor(Math.random()*100);
-    let secondNrandomNumber = Math.floor(Math.random()*1000);
-    const userCards=props.cards.map(card=>(
-        <div key={card.code + randomNumber+secondNrandomNumber}>
+    const userCards=props.cards.map((card,index)=>(
+        <div key={index}>
             {card.suit}
         </div>
     ))
