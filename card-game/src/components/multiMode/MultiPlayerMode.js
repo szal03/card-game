@@ -1,6 +1,7 @@
 import React from "react";
 import MultiGame from "./MultiGame";
-import '../style/ModeButton.css'
+import '../style/ModeButton.css';
+import '../style/MultiPlayerMode.css';
 
 
 class MultiPlayerMode extends React.Component{
@@ -16,6 +17,7 @@ class MultiPlayerMode extends React.Component{
             gameWiner:'',
             persianEye:false,
             remis: false,
+            infoShow: false,
         }
     }
 
@@ -34,9 +36,16 @@ class MultiPlayerMode extends React.Component{
 
     handleChange=(e)=>{
         console.log(e.target.value);
-        let playersNumber=e.target.value;
+        let inputValue=e.target.value;
+        if(inputValue>4){
+            inputValue=4;
+        }
+        else if(inputValue<2){
+            inputValue=2
+        }
+        let playersNumber=inputValue;
         this.setState({
-            numberOfUsers: e.target.value,
+            numberOfUsers: inputValue,
         });
 
     }
@@ -316,30 +325,60 @@ class MultiPlayerMode extends React.Component{
 
     }
 
+    handleShowInfo=()=>{
+        this.setState({
+            infoShow: true,
+        })
+    }
+    handleHideInfo=()=>{
+        setInterval(
+            this.setState({
+            infoShow: false,
+        }), 3000);
+
+    }
     render(){
         const {backButton} = this.props;
-        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis}=this.state;
+        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis,infoShow}=this.state;
+
         return(
             <div>
                 <div className="gameTitle">
                     <h1> Rozgrywka dla wielu graczy</h1>
                 </div>
                 <div className="contentContainer">
-                {!gameStart?  <div>
+                {!gameStart?  <div className="formContainer">
                     <form onSubmit={this.handleSubmit} noValidate>
-                        <label htmlFor="numberOfUsers">Wpisz liczbę graczy
-                            <input
-                                type="number"
-                                id="numberOfUsera"
-                                name="usersNumber"
-                                step="1"
-                                min="2"
-                                max="4"
-                                value={this.state.numberOfUsers}
-                                onChange={this.handleChange}
-                                disabled={submit}/>
-                        </label>
-                        <button disabled={submit}>Zatwierdź liczbę graczy</button>
+                       <div className="labelAndInputBox">
+                           <label htmlFor="numberOfUsers">
+                               <span className="inputLabel">Wybierz liczbę graczy:</span></label>
+                           <input
+                               type="number"
+                               id="numberOfUsera"
+                               name="usersNumber"
+                               step="1"
+                               min="2"
+                               max="4"
+                               value={this.state.numberOfUsers}
+                               onChange={this.handleChange}
+                               disabled={submit}/>
+                            <div className="infoBox">
+                                <div className="infoInBox"
+                                onMouseEnter={() => this.handleShowInfo()}
+                                onMouseLeave={() =>this.handleHideInfo()}>
+                                    <span>i</span>
+                                </div>
+                            </div>
+                       </div>
+                        {infoShow && (
+                            <div className="infoText">W trybie dla wielu graczy minimalna ilość graczy wynosi 2 a maksymalna 4. Po wybraniu liczby graczy należy zatwierdzić swój wybór wybierając przycisk "ZATWIERDŹ LICZBĘ GRACZY"</div>
+                        )}
+                        <div className="buttonsContainer">
+                            <button className="submitButtons"
+                                    disabled={submit}
+                            style={infoShow? {  boxShadow: '0px 20px 20px 1px rgba(99, 212, 113, .5)'}:null}><span>Zatwierdź liczbę graczy</span></button>
+                        </div>
+
                     </form>
                     <div className="buttonsContainer">
                         <button className='modeButton' disabled={!submit} onClick={this.handleGameStart}><span>Rozpocznij Grę</span></button>
