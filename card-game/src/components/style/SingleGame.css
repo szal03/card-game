@@ -61,3 +61,21 @@
 .gameButtons:hover{
     background: linear-gradient(to right, #233329, #63D471);
 }
+.gameButtons button:focus{
+    outline: none;
+}
+
+.playerScore{
+    margin-top: 2vh;
+    margin-bottom:2vh;
+    padding:3%
+}
+
+.playerScore span{
+     font-size: 20px;
+ }
+.playerScore span:hover{
+    font-size: 20px;
+    color: #63D471;
+    transition: 0.4s;
+}
