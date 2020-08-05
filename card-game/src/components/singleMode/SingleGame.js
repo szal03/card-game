@@ -35,7 +35,7 @@ const SingleGame=(props)=>{
                     computerPoints={computerPoints}/>
             </div>
             {userWin? <div>
-                <h1>Wygrał gracz1</h1>
+                <h1>Wygrał Gracz</h1>
                 <button className="gameButtons"
                         onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
                 </div>: null}
@@ -53,7 +53,7 @@ const SingleGame=(props)=>{
                     <PlayerCards cards={userCards}/>
                 </div>
                 <div className="playerScore">
-                    <span>Wynik gracza: {userPoints}</span>
+                    <span style={userPoints>21? {color: "red"}:null}>Wynik gracza: {userPoints}</span>
                 </div>
                 <div className="userButtonsContainer">
                     <button className="gameButtons"

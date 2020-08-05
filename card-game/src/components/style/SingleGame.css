@@ -13,16 +13,16 @@
 .backButtonBox{
     text-align: left;
 }
+
+.userContainer{
+    margin-top: 10vh;
+}
 .userCardContainer{
     display: flex;
 }
 
-.userCardContainer{
-
-}
-
 .imgBox{
-    width: 10%;
+    width: 5%;
     transition: 0.4s;
 }
 .imgBox:hover{
@@ -30,6 +30,9 @@
     transition: 0.4s;
 }
 
+.img img{
+    width: 100%;
+}
 .img:first-child img{
     animation: cardMove;
     animation-duration: 1s;
@@ -71,7 +74,6 @@
     cursor: default;
 }
 
-
 .playerScore{
     margin-top: 2vh;
     margin-bottom:2vh;
@@ -79,10 +81,10 @@
 }
 
 .playerScore span{
-     font-size: 20px;
+     font-size: 25px;
  }
 .playerScore span:hover{
-    font-size: 20px;
+    font-size: 25px;
     color: #63D471;
     transition: 0.4s;
 }

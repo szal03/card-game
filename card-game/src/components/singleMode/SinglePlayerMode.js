@@ -258,7 +258,7 @@ class SinglePlayerMode extends React.Component{
         })
     }
 
-    handlePlayAgain=()=>{
+    handlePlayAgain=()=>{ //todo => czasem zdaża się że nie działa prawidłowo
       this.handleResetButton();
       setInterval(this.handleTwoRandomCards(), 3000);
     }

@@ -376,7 +376,8 @@ class MultiPlayerMode extends React.Component{
                         <div className="buttonsContainer">
                             <button className="submitButtons"
                                     disabled={submit}
-                            style={infoShow? {  boxShadow: '0px 20px 20px 1px rgba(99, 212, 113, .5)'}:null}><span>Zatwierdź liczbę graczy</span></button>
+                            style={infoShow && !submit? {  boxShadow: '0px 20px 20px 1px rgba(99, 212, 113, .5)'}:null}>
+                                <span>Zatwierdź liczbę graczy</span></button>
                         </div>
 
                     </form>
