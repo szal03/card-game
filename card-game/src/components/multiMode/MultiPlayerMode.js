@@ -15,6 +15,7 @@ class MultiPlayerMode extends React.Component{
             gameEnd:false,
             gameWiner:'',
             persianEye:false,
+            remis: false,
         }
     }
 
@@ -41,8 +42,6 @@ class MultiPlayerMode extends React.Component{
     }
 
     createPlayers=(number)=>{
-        let index=this.state.usersTable.length+1;
-        console.log(index);
         let table=[];
         for(let i=0;i<=number-1;i++){
             let arrayForCards=[];
@@ -78,16 +77,6 @@ class MultiPlayerMode extends React.Component{
                 userId:i, name:`Gracz ${i+1}`,userCards:arrayForCards,asTable:actualAsTable,userPoints:pointsFromCards,userActiveStatus:active,gameWin:win, gameLose:false,
             })
         }
-      /*  const checkarr = table.filter(winner=>winner.gameWin);
-        if(checkarr.length!=0){
-            console.log("perskie oczko!");
-            console.log(checkarr);
-            this.setState({
-                gameEnd:false,
-                persianEye:true,
-            })
-        }*/
-        console.log(table);
         this.setState({
             usersTable: table
         })
@@ -178,10 +167,18 @@ class MultiPlayerMode extends React.Component{
             usersTable[id].gameWin = selectUserGameWin;
             usersTable[id].userActiveStatus=selectUserActiveStatus;
             usersTable[id].gameLose=true;
-            usersTable[id+1].userActiveStatus=true;
+            if(id+1!==usersTable.length){
+                usersTable[id+1].userActiveStatus=true;
+                this.setState({
+                    usersTable: usersTable
+                })
+            }
             this.setState({
                 usersTable: usersTable
             })
+            if(id===usersTable.length-1){
+                this.handlePassButton(id);
+            }
         }
         else{
             usersTable[id].userPoints = selectUserPoints;
@@ -195,66 +192,105 @@ class MultiPlayerMode extends React.Component{
 
     handlePassButton=(id)=>{
         let usersTableActive = this.state.usersTable;
-        if(id+1 === usersTableActive.length){
-            //też ustawić status disable
-            let selectPlayer = usersTableActive[id];
-            let playerStatus=selectPlayer.userActiveStatus;
-            playerStatus=false;
-            usersTableActive[id].userActiveStatus = playerStatus;
+        let selectPlayer = usersTableActive[id];
+        let playerStatus=selectPlayer.userActiveStatus;
+        playerStatus=false;
+        usersTableActive[id].userActiveStatus = playerStatus;
+        this.setState({
+            usersTable: usersTableActive
+        })
+        if(id+1!==usersTableActive.length){
+            usersTableActive[id+1].userActiveStatus = true;
             this.setState({
                 usersTable: usersTableActive
             })
-            const winer = usersTableActive.filter(status=>status.gameWin &&  !status.gameLose);
-            console.log("========");
-            console.log(winer);
-            console.log("========");
-            const winer2=usersTableActive.filter(status=>!status.gameLose);
-            console.log("========");
-            console.log(winer2);
-            console.log("========");
-            if(winer.length===0 && winer2.length>1){
-                let compareTable = [];
-                let diff=0;
-                for(let i=0;i<=usersTableActive.length-1;i++){
-                    let tmpPlayerPoints=winer2[i].userPoints;
-                    diff=21-tmpPlayerPoints;
-                    compareTable.push(diff)
-                }
-                let firstValue=compareTable[0]
-                let index=0;
-                for(let i=1;i<=compareTable.length;i++){
-                    if(compareTable[i]<firstValue){
-                        firstValue=compareTable[i];
-                        index=i;
-                    }
-                }
-                console.log(index);
-                let selectWiner = winer2[index];
-                let selectWinername=selectWiner.name;
-                let selectWinergameWin=selectWiner.gameWin;
+        }
+        else{
+            //sprawdź wyniki
+            let remis;
+            let nameWinner='';
+            const usersToCheck=usersTableActive.filter(status=>!status.gameLose && !status.gameWin); // to są ci, którzy mięli <21 pkt
+            console.log(usersToCheck);
+            if(usersToCheck.length===1){
+                let winName = usersToCheck[0].name;
+                let winID=usersToCheck[0].userID;
+                usersTableActive[winID].gameWin = true;
                 this.setState({
                     gameEnd:true,
-                    gameWiner:selectWinername,
-                })
-            }
-            else{ //todo to fix !!!! co się dzieje kiedy ostatni user wciśnie pass? przerób jeszcze raz tą funkcje
-                let selectPlayer = usersTableActive[id];
-                let nextPlayer = usersTableActive[id+1];
-                let playerStatus=selectPlayer.userActiveStatus;
-                let nextPlayerStatus=nextPlayer.userActiveStatus;
-                playerStatus=false;
-                nextPlayerStatus=true;
-                usersTableActive[id].userActiveStatus = playerStatus;
-                usersTableActive[id+1].userActiveStatus = nextPlayerStatus;
-                this.setState({
+                    gameWiner:winName,
                     usersTable: usersTableActive
                 })
             }
-          //co jak ktoś ma po tyle samo pkt?
-        }else{
+            else if(usersToCheck.length===2){
+                let userPoints1 = usersToCheck[0].userPoints;
+                let user1Id=usersToCheck[0].userId;
+                let user1name=usersToCheck[0].name;
+                let userPoints2=usersToCheck[1].userPoints;
+                let user2Id=usersToCheck[1].userId;
+                let user2name=usersToCheck[1].name;
+                if(userPoints1>userPoints2){
+                    console.log("wygrał: "+ usersToCheck[0])
+                    usersToCheck[0].gameWin = true;
+                    usersTableActive[user1Id].gameWin=true;
+                    nameWinner=user1name;
+                }
+                else if(userPoints1<userPoints2){
+                    console.log("wygrał: "+ usersToCheck[1])
+                    usersToCheck[1].gameWin = true;
+                    usersTableActive[user2Id].gameWin=true;
+                    nameWinner=user2name;
+                }
+                else{
+                    console.log("remis");
+                    remis=true;
+                    nameWinner= user1name + ''+user2name;
+                }
+                this.setState({
+                        gameEnd:true,
+                        gameWiner:nameWinner,
+                        remis:remis,
+                        usersTable: usersTableActive
 
+                })
+            }
+            else if(usersToCheck.length>2){
+                usersToCheck.sort((a,b)=>b.userPoints-a.userPoints);
+                console.log("===========");
+                console.log(usersToCheck);
+                let firstValue=usersToCheck[0].userPoints;
+                let firstValueId=usersToCheck[0].userId;
+                let firstValueName=usersToCheck[0].name;
+                let winnerTab=[];
+                winnerTab.push(usersToCheck[0]);
+                for(let i=1;i<=usersToCheck.length-1;i++){
+
+                    if(firstValue===usersToCheck[i].userPoints){
+                        winnerTab.push(usersToCheck[i]);
+                    }
+                }
+                if(winnerTab.length>1){
+                    for(let j=0;j<=winnerTab.length-1;j++){
+                        let id = winnerTab[j].userId;
+                        usersTableActive[id].gameWin = true;
+                        nameWinner=nameWinner+' '+winnerTab[j].name+' ';
+                    }
+                    this.setState({
+                        gameEnd:true,
+                        gameWiner:nameWinner,
+                        usersTable: usersTableActive
+                    })
+                }
+                else{
+                    usersTableActive[firstValueId].gameWin = true;
+                    this.setState({
+                        gameEnd:true,
+                        gameWiner:firstValueName,
+                        usersTable: usersTableActive
+                    })
+                }
+
+            }
         }
-
 
     }
 
@@ -262,6 +298,7 @@ class MultiPlayerMode extends React.Component{
         this.setState({
             gameStart:false,
             submit: false,
+            remis: false
         })
     }
 
@@ -273,13 +310,15 @@ class MultiPlayerMode extends React.Component{
             submit: false,
             gameEnd:false,
             gameWiner:'',
+            persianEye:false,
+            remis: false
         })
 
     }
 
     render(){
         const {backButton} = this.props;
-        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye}=this.state;
+        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis}=this.state;
         return(
             <div>Rozgrywka dla wielu graczy
                 {!gameStart?  <div> <form onSubmit={this.handleSubmit} noValidate>
@@ -309,6 +348,7 @@ class MultiPlayerMode extends React.Component{
                 backButton={this.handleBackButton}
                 buttonPlayAgain={this.handlePlayAgain}
                 persianEye={persianEye}
+                remis={remis}
                 />}
 
 

@@ -37,13 +37,14 @@ const MultiGame=(props)=>{
         gameEnd,
         gameWiner,
         backButton,
-    buttonPlayAgain, persianEye}=props;
+    buttonPlayAgain, persianEye,remis}=props;
     return(
         <div>
             <Player players={usersTable}
                     addButton={addButton}
                     passButton={passButton}/>
-            {gameEnd? <div>Wygrał {gameWiner}<button onClick={buttonPlayAgain}>Zagraj ponownie</button></div>:null}
+            {gameEnd && !remis? <div>Wygrał {gameWiner}<button onClick={buttonPlayAgain}>Zagraj ponownie</button></div>:null}
+            {gameEnd && remis? <div>Remis: {gameWiner}<button onClick={buttonPlayAgain}>Zagraj ponownie</button></div>:null}
             {persianEye? <div><h1>Perskie oczko!</h1></div>:null}
             <button onClick={backButton}>Powrót</button>
         </div>
