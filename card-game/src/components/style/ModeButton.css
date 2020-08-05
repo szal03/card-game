@@ -32,6 +32,26 @@
     opacity: 1;
     right: 0;
 }
+
+.modeButton:disabled{
+    cursor: default;
+    background-color: #5d4257;
+    background-image: linear-gradient(315deg, #5d4257 0%, #a5c7b7 74%);
+}
+
+.modeButton:disabled span{
+    cursor: default;
+    padding-right: 0;
+}
+
+.modeButton:disabled span:after{
+    content: none;
+    cursor: default;
+}
+.modeButton:disabled span:hover{
+    content: none;
+    cursor: default;
+}
 /* backmodeButton*/
 .modeButtonBack span:after {
     content: '\00AB';
@@ -51,5 +71,7 @@
 
 
 
-/*00AB*/
+
+
+
 

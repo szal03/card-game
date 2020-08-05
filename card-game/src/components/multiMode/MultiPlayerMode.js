@@ -1,6 +1,6 @@
 import React from "react";
 import MultiGame from "./MultiGame";
-
+import '../style/ModeButton.css'
 
 
 class MultiPlayerMode extends React.Component{
@@ -320,8 +320,13 @@ class MultiPlayerMode extends React.Component{
         const {backButton} = this.props;
         const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis}=this.state;
         return(
-            <div>Rozgrywka dla wielu graczy
-                {!gameStart?  <div> <form onSubmit={this.handleSubmit} noValidate>
+            <div>
+                <div className="gameTitle">
+                    <h1> Rozgrywka dla wielu graczy</h1>
+                </div>
+                <div className="contentContainer">
+                {!gameStart?  <div>
+                    <form onSubmit={this.handleSubmit} noValidate>
                         <label htmlFor="numberOfUsers">Wpisz liczbę graczy
                             <input
                                 type="number"
@@ -337,21 +342,22 @@ class MultiPlayerMode extends React.Component{
                         <button disabled={submit}>Zatwierdź liczbę graczy</button>
                     </form>
                     <div className="buttonsContainer">
-                    <button disabled={!submit} onClick={this.handleGameStart}><span>Rozpocznij Grę</span></button>
-                    <button onClick={backButton}>Powrót do menu</button>
-                    </div></div>:<MultiGame
-                    usersTable={usersTable}
-                addButton={this.handleAddCardButton}
-                passButton={this.handlePassButton}
-                gameEnd={gameEnd}
-                gameWiner={gameWiner}
-                backButton={this.handleBackButton}
-                buttonPlayAgain={this.handlePlayAgain}
-                persianEye={persianEye}
-                remis={remis}
-                />}
-
-
+                        <button className='modeButton' disabled={!submit} onClick={this.handleGameStart}><span>Rozpocznij Grę</span></button>
+                        <button className='modeButtonBack' onClick={backButton}><span>Powrót do menu</span></button>
+                    </div>
+            </div>:
+                    <MultiGame
+                        usersTable={usersTable}
+                        addButton={this.handleAddCardButton}
+                        passButton={this.handlePassButton}
+                        gameEnd={gameEnd}
+                        gameWiner={gameWiner}
+                        backButton={this.handleBackButton}
+                        buttonPlayAgain={this.handlePlayAgain}
+                        persianEye={persianEye}
+                        remis={remis}
+                        />}
+                </div>
             </div>
         )
     }
