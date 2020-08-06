@@ -36,7 +36,6 @@ class MultiPlayerMode extends React.Component{
     }
 
     handleChange=(e)=>{
-        console.log(e.target.value);
         let inputValue=e.target.value;
         if(inputValue>4){
             inputValue=4;
@@ -44,7 +43,6 @@ class MultiPlayerMode extends React.Component{
         else if(inputValue<2){
             inputValue=2
         }
-        let playersNumber=inputValue;
         this.setState({
             numberOfUsers: inputValue,
         });
@@ -61,7 +59,7 @@ class MultiPlayerMode extends React.Component{
             let actualAsTable=[];
             let win=false;
             let active=false;
-            if(i==0){
+            if(i===0){
                 active=true;
             }
             for(let j=0;j<=1;j++){
@@ -153,7 +151,7 @@ class MultiPlayerMode extends React.Component{
             })
             this.handleEndGame()
         }
-        else if(selectUserAsTable.length==2){
+        else if(selectUserAsTable.length===2){
             selectUserGameWin=true;
             usersTable[id].userPoints = selectUserPoints;
             usersTable[id].userCards = selectUserCards;
@@ -220,7 +218,6 @@ class MultiPlayerMode extends React.Component{
             let remis;
             let nameWinner='';
             const usersToCheck=usersTableActive.filter(status=>!status.gameLose && !status.gameWin); // to są ci, którzy mięli <21 pkt
-            console.log(usersToCheck);
             if(usersToCheck.length===1){
                 let winName = usersToCheck[0].name;
                 let winID=usersToCheck[0].userId;
@@ -239,19 +236,16 @@ class MultiPlayerMode extends React.Component{
                 let user2Id=usersToCheck[1].userId;
                 let user2name=usersToCheck[1].name;
                 if(userPoints1>userPoints2){
-                    console.log("wygrał: "+ usersToCheck[0])
                     usersToCheck[0].gameWin = true;
                     usersTableActive[user1Id].gameWin=true;
                     nameWinner=user1name;
                 }
                 else if(userPoints1<userPoints2){
-                    console.log("wygrał: "+ usersToCheck[1])
                     usersToCheck[1].gameWin = true;
                     usersTableActive[user2Id].gameWin=true;
                     nameWinner=user2name;
                 }
                 else{
-                    console.log("remis");
                     remis=true;
                     nameWinner= user1name + '  '+user2name;
                 }
@@ -265,8 +259,6 @@ class MultiPlayerMode extends React.Component{
             }
             else if(usersToCheck.length>2){
                 usersToCheck.sort((a,b)=>b.userPoints-a.userPoints);
-                console.log("===========");
-                console.log(usersToCheck);
                 let firstValue=usersToCheck[0].userPoints;
                 let firstValueId=usersToCheck[0].userId;
                 let firstValueName=usersToCheck[0].name;

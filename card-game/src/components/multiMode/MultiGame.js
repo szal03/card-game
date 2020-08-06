@@ -3,8 +3,6 @@ import '../style/MultiGame.css';
 
 const ShowCardsSummary=(props)=>{
     const playerCards=props.userTable[props.playerId].userCards;
-    const playerName=props.userTable[props.playerId].name;
-    console.log("handleShowCards");
     const buttonClose = props.buttonClose;
     const showCards=(
         <div className="cardsToShowContainer">
@@ -34,7 +32,7 @@ const PlayerCards=(props)=>{
 const PlayersTable=(props)=>{
     const players=props.players.map(player =>(
         <div key={player.userId}>
-            <span>{player.name}:  <span>{player.userPoints}</span></span>
+            <span>{player.name}:  <span style={player.userPoints>21? {color: "red"}:null}>{player.userPoints}</span></span>
         </div>
     ))
     return players;
@@ -44,7 +42,6 @@ const PlayerContent=(props)=>{
     const activePlayer = props.players.filter(status=>status.userActiveStatus);
     let content;
     if(activePlayer!==[]){
-        console.log(activePlayer);
         const playerId=activePlayer[0].userId;
         const playerName=activePlayer[0].name;
         const userCards=activePlayer[0].userCards;
@@ -98,7 +95,7 @@ const SummaryTable=(props)=>{
     ))
     return summaryPlayers
 }
-//todo => napraw wyświetlanie kart konkretnego gracza!
+
 const MultiGame=(props)=>{
     const {usersTable,
         addButton,

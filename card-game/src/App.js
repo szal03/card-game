@@ -40,7 +40,7 @@ state={
             }
             throw Error(response.status)
         }).then(response => response.json())
-            .then(data => {console.log(data.cards);
+            .then(data => {
                 this.setState({
                     cardDeck: data.cards,
                 })})

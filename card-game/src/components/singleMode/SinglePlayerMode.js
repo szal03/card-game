@@ -44,15 +44,12 @@ class SinglePlayerMode extends React.Component{
     checkAs=(card)=>{
         const actualAsTable = this.state.asTable;
         if(card.value==="ACE"){
-            console.log("sprawdzam czy ta karta jest asem")
             actualAsTable.push(card);
-            console.log(actualAsTable);
             this.setState({
                 asTable: actualAsTable
             })
         }
         if(this.state.asTable.length===2){
-            console.log("sprawdzam ile jest asów w tabeli asowej")
             this.setState({
                 gameWin: true,
                 activePassButton: true
@@ -63,15 +60,12 @@ class SinglePlayerMode extends React.Component{
     checkAsComputer=(card)=>{
         const actualAsTable = this.state.asTableComputer;
         if(card.value==="ACE"){
-            console.log("sprawdzam czy ta karta jest asem")
             actualAsTable.push(card);
-            console.log(actualAsTable);
             this.setState({
                 asTableComputer: actualAsTable
             })
         }
         if(this.state.asTableComputer.length===2){
-            console.log("sprawdzam ile jest asów w tabeli asowej")
             this.setState({
                 gameWinComputer: true,
             })
@@ -92,7 +86,6 @@ class SinglePlayerMode extends React.Component{
             let firstCardsIndex = Math.floor(Math.random()*51);
             let firstCard = this.state.cardDeckSingleGame[firstCardsIndex];
             cardValueText=firstCard.value;
-            console.log(firstCard);
             points=this.countPoints(cardValueText);
             pointsFromCards=pointsFromCards+points;
             this.checkAs(firstCard);
@@ -101,7 +94,6 @@ class SinglePlayerMode extends React.Component{
             let firstCardsForComputerIndex = Math.floor(Math.random()*51);
             let firstCardForComputer = this.state.cardDeckSingleGame[firstCardsForComputerIndex];
             cardValueTextForComputer=firstCardForComputer.value;
-            console.log(firstCardForComputer);
             pointsForComputer = this.countPoints(cardValueTextForComputer);
             pointsFromCardsForComputer=pointsFromCardsForComputer+pointsForComputer;
             this.checkAsComputer(firstCardForComputer);
@@ -119,7 +111,6 @@ class SinglePlayerMode extends React.Component{
     }
 
     handleAddCard=()=>{
-        console.log("handleAddCard");
         let pointsFromAddingCard=0;
         const deck = this.state.cardDeckSingleGame;
         const actualUserCards = this.state.userCards;
@@ -148,7 +139,6 @@ class SinglePlayerMode extends React.Component{
 
     handlePassButton=()=>{
         this.handleComputerProcedure();
-        console.log("handlePassButton");
         const userActualPoints=this.state.userPoints;
         if(userActualPoints===21){
             this.setState({
@@ -167,44 +157,33 @@ class SinglePlayerMode extends React.Component{
     handleCheckScore=(points)=>{
         const userPoints=this.state.userPoints;
         const computerPoints=points;
-        console.log("=================");
-        console.log(computerPoints);
-        console.log("=================");
         const winResult = 21;
         const userAbsPoints=Math.abs(winResult-userPoints);
         const computerAbsPoints=Math.abs(winResult-computerPoints);
-        console.log(userAbsPoints);
-        console.log(computerAbsPoints);
         if(userPoints<22 && computerPoints<22){
             if(userAbsPoints<computerAbsPoints){
-                console.log("wygrał gracz1");
                 this.setState({
                     gameWin: true,
                 })
             }else if(userAbsPoints>computerAbsPoints){
-                console.log("wygrał komputer");
                 this.setState({
                     gameWinComputer: true,
                 })
             }
             else{
-                console.log("remis");
                 this.setState({
                     remis: true,
                 })
             }
         }else if(userPoints>=22 && computerPoints<22){
-            console.log("wygrał komputer");
             this.setState({
                 gameWinComputer: true,
             })
         }else if(computerPoints>=22 && userPoints<22){
-            console.log("wygrał gracz1");
             this.setState({
                 gameWin: true,
             })
         }else{
-            console.log("oboje przegraliście");
             this.setState({
                 remis: true,
             })
@@ -247,11 +226,9 @@ class SinglePlayerMode extends React.Component{
                 pointsFromAddingCard=this.countPoints(addingCard.value);
                 actualComputerCards.push(addingCard);
                 points=points+pointsFromAddingCard;
-                console.log(points);
             }
             else if(points<=20){
                 let randomNumber = Math.floor(Math.random()*2);
-                console.log(randomNumber);
                if(randomNumber===1){
                    let pointsFromAddingCard=0;
                    let randomCardIndex = Math.floor(Math.random()*51);
@@ -260,8 +237,6 @@ class SinglePlayerMode extends React.Component{
                    pointsFromAddingCard=this.countPoints(addingCard.value);
                    actualComputerCards.push(addingCard);
                    points=points+pointsFromAddingCard;
-
-                   console.log(points);
 
                }else{
                    this.setState({
