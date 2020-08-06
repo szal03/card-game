@@ -1,0 +1,77 @@
+
+.modeButton, .modeButtonBack {
+    border-radius: 4px;
+    background: linear-gradient(to right, #233329, #63D471);
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 22px;
+    padding: 20px;
+    transition: all 0.4s;
+    cursor: pointer;
+}
+.modeButton span, .modeButtonBack span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.4s;
+}
+.modeButton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.modeButton:hover span {
+    padding-right: 25px;
+}
+.modeButton:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.modeButton:disabled{
+    cursor: default;
+    background-color: #5d4257;
+    background-image: linear-gradient(315deg, #5d4257 0%, #a5c7b7 74%);
+}
+
+.modeButton:disabled span{
+    cursor: default;
+    padding-right: 0;
+}
+
+.modeButton:disabled span:after{
+    content: none;
+    cursor: default;
+}
+.modeButton:disabled span:hover{
+    content: none;
+    cursor: default;
+}
+/* backmodeButton*/
+.modeButtonBack span:after {
+    content: '\00AB';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: -20px;
+    transition: 0.5s;
+}
+.modeButtonBack:hover span {
+    padding-left: 25px;
+}
+.modeButtonBack:hover span:after {
+    opacity: 1;
+    left: 0;
+}
+
+
+
+
+
+
+

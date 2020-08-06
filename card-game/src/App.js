@@ -1,62 +1,78 @@
 import React from 'react';
 import './App.css';
 import ModeButton from "./components/ModeButton";
-import SinglePlayerMode from "./components/SinglePlayerMode";
-import MultiPlayerMode from "./components/MultiPlayerMode";
+import SinglePlayerMode from "./components/singleMode/SinglePlayerMode";
+import MultiPlayerMode from "./components/multiMode/MultiPlayerMode";
 
-const singleGame="Jeden gracz";
-const multiplayerGame="Wielu graczy";
 
 class App extends React.Component {
 
+
 state={
-    singlePlayerActive: false,
-    multiplayerActive: false,
-    startGame: false,
+    singleMode: false,
+    multiMode: false,
+    cardDeck:[],
 
 }
 
-handleSingleGame=()=>{
-    this.setState({
-        singlePlayerActive: true,
-        multiplayerActive: false,
-    })
-}
+    handleSingleGame=()=>{
+        this.setState({
+            singleMode: true,
+        })
+    }
 
     handleMultiGame=()=>{
-        console.log("multi game");
-
         this.setState({
-            singlePlayerActive: false,
-            multiplayerActive: true,
+            multiMode: true,
         })
     }
 
     handleBackButton=()=>{
-        console.log("back to menu");
-
         this.setState({
-            singlePlayerActive: false,
-            multiplayerActive: false,
-            startGame: false,
+            singleMode: false,
+            multiMode: false,
         })
-
     }
 
-  render(){
+    componentDidMount() {
+        const query ="https://deckofcardsapi.com/api/deck/new/draw/?count=51";
+        fetch(query).then(response=>{
+            if(response.ok){
+                return response
+            }
+            throw Error(response.status)
+        }).then(response => response.json())
+            .then(data => {console.log(data.cards);
+                this.setState({
+                    cardDeck: data.cards,
+                })})
+            .catch(error=>console.log(error))
+    }
+
+    render(){
+      const singleModeText = "Pojedyńczy gracz";
+      const multiModeText = "Wielu graczy";
       return (
           <div className="App">
+              <div className="AppContent">
               {
-                  this.state.singlePlayerActive===false && this.state.multiplayerActive===false ?
+                  this.state.singleMode===false && this.state.multiMode===false ?
                       <div>
                           <h1>Wybierz tryb gry</h1>
-                          <ModeButton text={singleGame} click={this.handleSingleGame}/>
-                          <ModeButton text={multiplayerGame} click={this.handleMultiGame}/>
+                          <div className="buttonsContainer">
+                              <ModeButton text={singleModeText} click={this.handleSingleGame}/>
+                              <ModeButton text={multiModeText} click={this.handleMultiGame}/>
+                          </div>
                       </div>
                       : null
               }
-              {this.state.singlePlayerActive ? <SinglePlayerMode buttonFunction={this.handleBackButton} active={this.state.startGame}/> : null}
-              {this.state.multiplayerActive ? <MultiPlayerMode buttonFunction={this.handleBackButton} active={this.state.startGame}/> : null}
+              {this.state.singleMode ? <SinglePlayerMode
+                  backButton={this.handleBackButton}
+                  deck={this.state.cardDeck}/> : null}
+              {this.state.multiMode ? <MultiPlayerMode
+                  backButton={this.handleBackButton}
+                  deck={this.state.cardDeck}/> : null}
+              </div>
           </div>
       );
   }

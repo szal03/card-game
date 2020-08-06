@@ -1,12 +1,11 @@
 import React from "react";
+import './style/ModeButton.css'
 
 
-const ModeButton = (props) =>{
+const ModeButton=(props)=>{
     return(
-        <div>
-            <button onClick={props.click}>{props.text}</button>
-        </div>
+        <button className='modeButton'
+                onClick={props.click}><span>{props.text}</span></button>
     )
 }
-
 export default ModeButton;
