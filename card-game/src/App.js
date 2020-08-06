@@ -6,8 +6,6 @@ import MultiPlayerMode from "./components/multiMode/MultiPlayerMode";
 
 
 class App extends React.Component {
-
-
 state={
     singleMode: false,
     multiMode: false,
@@ -49,6 +47,7 @@ state={
             .catch(error=>console.log(error))
     }
 
+
     render(){
       const singleModeText = "Pojedyńczy gracz";
       const multiModeText = "Wielu graczy";
@@ -57,11 +56,16 @@ state={
               <div className="AppContent">
               {
                   this.state.singleMode===false && this.state.multiMode===false ?
-                      <div>
+                      <div className="modeGameContainer">
                           <h1>Wybierz tryb gry</h1>
                           <div className="buttonsContainer">
                               <ModeButton text={singleModeText} click={this.handleSingleGame}/>
                               <ModeButton text={multiModeText} click={this.handleMultiGame}/>
+                          </div>
+                          <div>
+                              <div>
+
+                              </div>
                           </div>
                       </div>
                       : null

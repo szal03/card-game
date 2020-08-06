@@ -104,10 +104,8 @@ class SinglePlayerMode extends React.Component{
             console.log(firstCardForComputer);
             pointsForComputer = this.countPoints(cardValueTextForComputer);
             pointsFromCardsForComputer=pointsFromCardsForComputer+pointsForComputer;
-
             this.checkAsComputer(firstCardForComputer);
             tmpForComputer.push(firstCardForComputer);
-
 
         }
         this.setState({
@@ -236,33 +234,6 @@ class SinglePlayerMode extends React.Component{
         })
     }
 
-    handleResetButton=()=>{
-        this.setState({
-            userCards:[],
-            userPoints:0,
-            asTable:[],
-            gameStart: true,
-            gameWin: false,
-            winPointsUser: false,
-            activePassButton: false,
-
-            computerCards:[],
-            computerPoints:0,
-            asTableComputer:[],
-            computerActive: true,
-            winPointsComputer: false,
-            activePassButtonComputer: false,
-            gameWinComputer: false,
-
-            remis: false,
-        })
-    }
-
-    handlePlayAgain=()=>{ //todo => czasem zdaża się że nie działa prawidłowo
-      this.handleResetButton();
-      setInterval(this.handleTwoRandomCards(), 3000);
-    }
-
     handleComputerProcedure=()=>{
         let points = this.state.computerPoints;
         const deck = this.state.cardDeckSingleGame;
@@ -337,7 +308,7 @@ class SinglePlayerMode extends React.Component{
                             buttonAdd={this.handleAddCard}
                             buttonPass={this.handlePassButton}
                             buttonBack={this.handleBackButtonSinglePlayerMode}
-                            buttonPlayAgain={this.handlePlayAgain}
+                            buttonPlayAgain={this.handleBackButtonSinglePlayerMode}
                             addButtonStatus={this.state.activePassButton}
                             passButtonStatus={this.state.activePassButtonStatus}
                             userCards={this.state.userCards}

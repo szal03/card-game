@@ -29,9 +29,49 @@ flex-direction: column;
   margin-bottom: 2vh;
   margin-top: 2vh;
 }
+.modeGameContainer{
+  width: 40%;
+  margin: auto;
+  padding: 3%;
+  border: 1px solid black;
+  animation-name: boxDecoration;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-delay: -1ms;
+}
 
+.decorationBox{
+  border: 1px solid white;
+  width: 10vh;
+  height: 20vh;
+  animation-name: boxDecoration;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
 
-
-
-
-
+@keyframes boxDecoration {
+  0%{
+    border-top-color: white;
+    border-bottom-color: white;
+    border-left-color: #233329;
+    border-right-color: #233329;
+  }
+  25%{
+    border-top-color: #63D471;
+    border-left-color: white;
+  }
+  50%{
+    border-bottom-color: white;
+    border-right-color: white;
+  }
+  75%{
+    border-bottom-color: #63D471;
+    border-left-color: #233329;
+  }
+  100%{
+    border-top-color: white;
+    border-bottom-color: white;
+    border-left-color: #233329;
+    border-right-color: #233329;
+  }
+}
