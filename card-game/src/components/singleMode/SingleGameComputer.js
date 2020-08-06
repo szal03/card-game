@@ -5,7 +5,7 @@ const SingleGameComputer =(props)=>{
            return(<div>
               <h1>Przeciwnik</h1>
                <div className="playerScore">
-                   <span style={computerPoints>21? {color: "red"}:null}>Wynik komputera: {computerPoints}</span>
+                   <span style={computerPoints>21? {color: "red"}:null}>Wynik przeciwnika: {computerPoints}</span>
                </div>
 
            </div>)

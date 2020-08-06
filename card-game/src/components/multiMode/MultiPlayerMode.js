@@ -253,7 +253,7 @@ class MultiPlayerMode extends React.Component{
                 else{
                     console.log("remis");
                     remis=true;
-                    nameWinner= user1name + ''+user2name;
+                    nameWinner= user1name + '  '+user2name;
                 }
                 this.setState({
                         gameEnd:true,

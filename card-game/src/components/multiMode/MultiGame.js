@@ -8,8 +8,8 @@ const ShowCardsSummary=(props)=>{
     const buttonClose = props.buttonClose;
     const showCards=(
         <div className="cardsToShowContainer">
-            <div className="cardsToShowButtonAndName">
-            <button className="closeCardsContianer"
+            <div className="cardsToShowButton">
+            <button className="closeCardsButton"
                     onClick={()=>buttonClose(props.playerId)}><span>X</span></button>
         </div>
            <div className="cardBox">
@@ -78,13 +78,16 @@ const PlayerContent=(props)=>{
 }
 
 const SummaryTable=(props)=>{
+    const space='        ';
     const userTable=props.players;
     const buttonShowCards = props.buttonShowCards;
     const buttonClose = props.buttonClose;
     const summaryPlayers=props.players.map(player =>(
         <div className="playerSummaryRow" key={player.userId}>
-            <span>{player.name}:  <span>{player.userPoints}</span></span>
-            <button onClick={()=>buttonShowCards(player.userId)}><span>Zobacz karty gracza</span></button>
+           <div className="titleAndButton">
+               <span className="spanInRow">{player.name}:{space}<span>{player.userPoints} pkt</span></span>
+               <button className="gameButtonsInRow" onClick={()=>buttonShowCards(player.userId)}><span>Zobacz karty gracza</span></button>
+           </div>
             {player.showCards? <div className="containerForShowCards">
                 <ShowCardsSummary userTable={userTable}
                                                  playerId={player.userId}
@@ -114,8 +117,9 @@ const MultiGame=(props)=>{
                 <PlayersTable players={usersTable}/>
             </div>:null}
             {gameEnd && !remis? <div>
+                <div className="infoRow">
                         <h2>Wygrał {gameWiner}</h2>
-                        <button onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
+                    <button className="gameButtons" onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button></div>
                         <h3>Tabela punktów</h3>
                             <div className="summaryTable">
                                 <SummaryTable players={usersTable}
@@ -126,7 +130,19 @@ const MultiGame=(props)=>{
 
 
             </div>:null}
-            {gameEnd && remis? <div>Remis: {gameWiner}<button onClick={buttonPlayAgain}>Zagraj ponownie</button></div>:null}
+            {gameEnd && remis?
+                <div>
+                    <div className="infoRow"><h2>Remis: {gameWiner}</h2>
+                    <button className="gameButtons" onClick={buttonPlayAgain}>Zagraj ponownie</button>
+                    </div>
+                    <h3>Tabela punktów</h3>
+                    <div className="summaryTable">
+                        <SummaryTable players={usersTable}
+                                      summaryCardShow={summaryCardShow}
+                                      buttonShowCards={buttonShowCards}
+                                      buttonClose={buttonClose}/>
+                    </div>
+                </div>:null}
             {persianEye? <div><h1>Perskie oczko!</h1></div>:null}
             {!gameEnd?  <div className="playerContent">
                 <PlayerContent players={usersTable}
