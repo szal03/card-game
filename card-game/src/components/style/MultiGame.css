@@ -1,0 +1,52 @@
+.playersTable{
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 15%;
+    font-size: 22px;
+    padding: 1%;
+    border: 1px solid;
+    border-radius: 4px;
+}
+.playersTable h3{
+    font-size: 24px;
+    margin: 1% 0;
+    border-bottom: 1px solid;
+    padding-bottom: 3px;
+}
+
+.summaryTable{
+    display: flex;
+    flex-direction: column;
+}
+
+.playerSummaryRow{
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 3%;
+    width: 50%;
+    margin: auto;
+}
+
+.containerForShowCards{
+    width: 75%;
+    margin: auto;
+}
+
+.cardsToShowContainer{
+    display: grid;
+    width: 100%;
+    padding: 3%;
+
+}
+.cardsToShowButtonAndName{
+    display: flex;
+}
+.closeCardsContianer{
+
+}
+.cardBox{
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}

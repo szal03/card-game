@@ -18,6 +18,7 @@ class MultiPlayerMode extends React.Component{
             persianEye:false,
             remis: false,
             infoShow: false,
+            summaryCardShow:false
         }
     }
 
@@ -83,7 +84,7 @@ class MultiPlayerMode extends React.Component{
                 arrayForCards.push(firstCard);
             }
             table.push({
-                userId:i, name:`Gracz ${i+1}`,userCards:arrayForCards,asTable:actualAsTable,userPoints:pointsFromCards,userActiveStatus:active,gameWin:win, gameLose:false,
+                userId:i, name:`Gracz ${i+1}`,userCards:arrayForCards,asTable:actualAsTable,userPoints:pointsFromCards,userActiveStatus:active,gameWin:win, gameLose:false,showCards:false,
             })
         }
         this.setState({
@@ -222,7 +223,7 @@ class MultiPlayerMode extends React.Component{
             console.log(usersToCheck);
             if(usersToCheck.length===1){
                 let winName = usersToCheck[0].name;
-                let winID=usersToCheck[0].userID;
+                let winID=usersToCheck[0].userId;
                 usersTableActive[winID].gameWin = true;
                 this.setState({
                     gameEnd:true,
@@ -305,9 +306,13 @@ class MultiPlayerMode extends React.Component{
 
     handleBackButton=()=>{
         this.setState({
+            usersTable:[],
+            gameEnd:false,
             gameStart:false,
             submit: false,
-            remis: false
+            remis: false,
+            gameWiner:'',
+            persianEye:false,
         })
     }
 
@@ -330,6 +335,7 @@ class MultiPlayerMode extends React.Component{
             infoShow: true,
         })
     }
+
     handleHideInfo=()=>{
         setInterval(
             this.setState({
@@ -337,9 +343,26 @@ class MultiPlayerMode extends React.Component{
         }), 3000);
 
     }
+
+    handleShowCards=(id)=>{
+        let usersTable =this.state.usersTable;
+        usersTable[id].showCards = true;
+        this.setState({
+            usersTable: usersTable,
+        })
+    }
+
+    handleButtonClose=(id)=>{
+        let usersTable =this.state.usersTable;
+        usersTable[id].showCards = false;
+        this.setState({
+            usersTable: usersTable,
+        })
+    }
+
     render(){
         const {backButton} = this.props;
-        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis,infoShow}=this.state;
+        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis,infoShow, summaryCardShow}=this.state;
 
         return(
             <div>
@@ -386,17 +409,23 @@ class MultiPlayerMode extends React.Component{
                         <button className='modeButtonBack' onClick={backButton}><span>Powrót do menu</span></button>
                     </div>
             </div>:
-                    <MultiGame
-                        usersTable={usersTable}
-                        addButton={this.handleAddCardButton}
-                        passButton={this.handlePassButton}
-                        gameEnd={gameEnd}
-                        gameWiner={gameWiner}
-                        backButton={this.handleBackButton}
-                        buttonPlayAgain={this.handlePlayAgain}
-                        persianEye={persianEye}
-                        remis={remis}
-                        />}
+                    <div>
+
+                        <MultiGame
+                            usersTable={usersTable}
+                            addButton={this.handleAddCardButton}
+                            passButton={this.handlePassButton}
+                            gameEnd={gameEnd}
+                            gameWiner={gameWiner}
+                            backButton={this.handleBackButton}
+                            buttonPlayAgain={this.handlePlayAgain}
+                            persianEye={persianEye}
+                            remis={remis}
+                            buttonShowCards={this.handleShowCards}
+                            summaryCardShow={summaryCardShow}
+                            buttonClose={this.handleButtonClose}
+                            />
+                    </div>}
                 </div>
             </div>
         )
