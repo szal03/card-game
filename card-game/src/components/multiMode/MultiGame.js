@@ -41,7 +41,7 @@ const PlayersTable=(props)=>{
 const PlayerContent=(props)=>{
     const activePlayer = props.players.filter(status=>status.userActiveStatus);
     let content;
-    if(activePlayer!==[]){
+    if(activePlayer.length===1){
         const playerId=activePlayer[0].userId;
         const playerName=activePlayer[0].name;
         const userCards=activePlayer[0].userCards;
@@ -67,11 +67,54 @@ const PlayerContent=(props)=>{
 
             </div>
         )
-    }else{
-        content=null;
+    }
+    else{
+        const usersTable=props.players;
+        const summaryCardShow=props.summaryCardShow;
+        const buttonShowCards=props.buttonShowCards;
+        const buttonClose=props.buttonClose;
+        const gameWiner=props.gameWiner;
+        const buttonPlayAgain=props.buttonPlayAgain;
+        content=(
+            <div>
+                <div className="infoRow"><h2>Remis: {gameWiner}</h2>
+                    <button className="gameButtons" onClick={buttonPlayAgain}>Zagraj ponownie</button>
+                </div>
+                <h3>Tabela punktów</h3>
+                <div className="summaryTable">
+                    <SummaryTable players={usersTable}
+                                  summaryCardShow={summaryCardShow}
+                                  buttonShowCards={buttonShowCards}
+                                  buttonClose={buttonClose}/>
+                </div>
+            </div>
+        );
     }
 
     return content;
+}
+
+const Alert=(props)=>{
+    const buttonCloseAlert=props.buttonCloseAlert;
+    const allPlayers=props.players;
+    const activePlayer = props.players.filter(status=>status.userActiveStatus);
+    if(activePlayer.length===1){
+        let activeUserId=activePlayer[0].userId;
+        let lastPlayerName=allPlayers[activeUserId-1].name;
+        const alertContent=(
+            <div className="alertConstent">
+                <span style={{fontSize: '24px'}}>{lastPlayerName} przegrał, teraz nastąpi kolejka {activePlayer[0].name}</span>
+                <button className="closeCardsButton"
+                        style={{
+                            margin:'auto',
+                            marginTop:'3%'
+                        }}
+                        onClick={buttonCloseAlert}><span>OK</span></button>
+            </div>
+        )
+        return alertContent;
+    }
+    return null;
 }
 
 const SummaryTable=(props)=>{
@@ -103,7 +146,14 @@ const MultiGame=(props)=>{
         gameEnd,
         gameWiner,
         backButton,
-    buttonPlayAgain, persianEye,remis, summaryCardShow,buttonShowCards,buttonClose}=props;
+    buttonPlayAgain,
+        persianEye,
+        remis,
+        summaryCardShow,
+        buttonShowCards,
+        buttonClose,
+        showAlert,
+        buttonCloseAlert}=props;
     return(
         <div>
             <div className="backButtonBox">
@@ -113,6 +163,7 @@ const MultiGame=(props)=>{
                 <h3>Tabela punktów</h3>
                 <PlayersTable players={usersTable}/>
             </div>:null}
+            {persianEye? <div><h1>Perskie oczko!</h1></div>:null}
             {gameEnd && !remis? <div>
                 <div className="infoRow">
                         <h2>Wygrał {gameWiner}</h2>
@@ -124,8 +175,6 @@ const MultiGame=(props)=>{
                                               buttonShowCards={buttonShowCards}
                                               buttonClose={buttonClose}/>
                             </div>
-
-
             </div>:null}
             {gameEnd && remis?
                 <div>
@@ -140,11 +189,18 @@ const MultiGame=(props)=>{
                                       buttonClose={buttonClose}/>
                     </div>
                 </div>:null}
-            {persianEye? <div><h1>Perskie oczko!</h1></div>:null}
-            {!gameEnd?  <div className="playerContent">
+            {!gameEnd && !showAlert? <div className="playerContent">
                 <PlayerContent players={usersTable}
                                addButton={addButton}
-                               passButton={passButton}/>
+                               passButton={passButton}
+                               summaryCardShow={summaryCardShow}
+                               buttonShowCards={buttonShowCards}
+                               buttonClose={buttonClose}
+                               gameWiner={gameWiner}
+                               buttonPlayAgain={buttonPlayAgain}/>
+            </div>:null}
+            {!gameEnd && showAlert? <div className="playerContent">
+              <div><Alert players={usersTable} buttonCloseAlert={buttonCloseAlert}/></div>
             </div>:null}
         </div>
     )

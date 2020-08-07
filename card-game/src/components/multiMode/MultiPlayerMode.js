@@ -18,7 +18,8 @@ class MultiPlayerMode extends React.Component{
             persianEye:false,
             remis: false,
             infoShow: false,
-            summaryCardShow:false
+            summaryCardShow:false,
+            showAlert:false,
         }
     }
 
@@ -169,6 +170,11 @@ class MultiPlayerMode extends React.Component{
         else if(selectUserPoints>=22 && selectUserAsTable.length!==2){
             selectUserGameWin=false;
             selectUserActiveStatus=false;
+            if(selectUserActiveStatus===false && id+1!==usersTable.length){
+                this.setState({
+                    showAlert: true,
+                })
+            }
             usersTable[id].userPoints = selectUserPoints;
             usersTable[id].userCards = selectUserCards;
             usersTable[id].asTable=selectUserAsTable;
@@ -352,9 +358,23 @@ class MultiPlayerMode extends React.Component{
         })
     }
 
+    handleButtonCloseAlert=()=>{
+        this.setState({
+            showAlert: false,
+        })
+    }
+
     render(){
         const {backButton} = this.props;
-        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis,infoShow, summaryCardShow}=this.state;
+        const {submit,
+            gameStart,
+            usersTable,
+            gameEnd,
+            gameWiner,
+            persianEye,
+            remis,infoShow,
+            summaryCardShow,
+            showAlert}=this.state;
 
         return(
             <div>
@@ -416,6 +436,8 @@ class MultiPlayerMode extends React.Component{
                             buttonShowCards={this.handleShowCards}
                             summaryCardShow={summaryCardShow}
                             buttonClose={this.handleButtonClose}
+                            showAlert={showAlert}
+                            buttonCloseAlert={this.handleButtonCloseAlert}
                             />
                     </div>}
                 </div>

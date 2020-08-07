@@ -155,3 +155,41 @@ display: inherit;
 .gameButtonsInRow:disabled span{
     cursor: default;
 }
+
+.alertConstent{
+    display: grid;
+    padding: 2%;
+    width: 35%;
+    margin: auto;
+    border: 1px solid white;
+    animation-name: boxDecoration;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes boxDecoration {
+    0%{
+        border-top-color: white;
+        border-bottom-color: white;
+        border-left-color: #233329;
+        border-right-color: #233329;
+    }
+    25%{
+        border-top-color: #63D471;
+        border-left-color: white;
+    }
+    50%{
+        border-bottom-color: white;
+        border-right-color: white;
+    }
+    75%{
+        border-bottom-color: #63D471;
+        border-left-color: #233329;
+    }
+    100%{
+        border-top-color: white;
+        border-bottom-color: white;
+        border-left-color: #233329;
+        border-right-color: #233329;
+    }
+}
