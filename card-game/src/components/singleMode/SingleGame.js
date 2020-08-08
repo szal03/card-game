@@ -61,7 +61,7 @@ const SingleGame=(props)=>{
                             disabled={addButtonStatus}><span>Pobierz kartę</span></button>
                     <button className="gameButtons"
                             onClick={buttonPass}
-                            disabled={addButtonStatus}><span>Pass</span></button>
+                            disabled={addButtonStatus}><span>Pas</span></button>
                 </div>
 
             </div>

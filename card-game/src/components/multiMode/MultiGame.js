@@ -62,7 +62,7 @@ const PlayerContent=(props)=>{
                             onClick={()=>props.addButton(playerId)}><span>Pobierz kartę</span></button>
                     <button className="gameButtons"
                             disabled={!userStatus}
-                            onClick={()=>props.passButton(playerId)}><span>Pass</span></button>
+                            onClick={()=>props.passButton(playerId)}><span>Pas</span></button>
                 </div>
 
             </div>
