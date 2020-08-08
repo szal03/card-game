@@ -1,8 +1,8 @@
-##Gra karciana "Oczko"
+## Gra karciana "Oczko"
 
-####Wykorzystane technologie: HTML5, CSS, JavaScript, React
+#### Wykorzystane technologie: HTML5, CSS, JavaScript, React
 
-####Opis aplikacji:
+#### Opis aplikacji:
 
 Aplikacja opiera się na regułach gry karcianej "oczko".
 Po włączeniu aplikacji, użytkownik ma możliwość wyboru trybu gry między rozgrywką dla pojedyńczego gracza, a trybem dla wielu graczy.<br />
