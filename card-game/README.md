@@ -1,3 +1,27 @@
+##Gra karciana "Oczko"
+
+####Wykorzystane technologie: HTML5, CSS, JavaScript, React
+
+####Opis aplikacji:
+
+Aplikacja opiera się na regułach gry karcianej "oczko".
+Po włączeniu aplikacji, użytkownik ma możliwość wyboru trybu gry między rozgrywką dla pojedyńczego gracza, a trybem dla wielu graczy.<br />
+<br />
+1.Tryb pojedyńczego gracza:
+<br />
+* 1.1 Po wybraniu trybu dla pojedyńczego gracza, użytkownik może rozpocząć rozgrywkę lub cofnąć się do wyboru między grą dla pojedyńczego gracza, a grą wieloosobową.<br/>
+* 1.21 Jeśli użytkownik wybierze opcje "Powrót do menu", powróci do menu głównego.
+* 1.22. W przypadku gdy użytkownik, wybierze przycisk "Rozpocznij grę", automatycznie uruchomi się gra. Na samym początku gracz i jego przeciwnik (komputer), otrzymują dwie wylosowane karty z talii. 
+Następnie gracz ma możliwość wyboru, czy chce dobrać kolejną kartę czy wybiera opcję "pas".
+
+<br />
+2.Tryb wieloosobowy:
+
+
+
+
+============================================================
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -33,7 +33,9 @@ input[type=number]:focus{
     outline: none;
     box-shadow: -1px 16px 20px -8px rgba(11, 171, 100, .5);
 }
-
+.buttonsContainer{
+    transition: all 1s;
+}
 .submitButtons{
     border-radius: 4px;
     background: transparent;
@@ -43,7 +45,7 @@ input[type=number]:focus{
     text-transform: uppercase;
     font-size: 22px;
     padding: 20px;
-    transition: all 0.8s;
+    transition: all 1s;
     cursor: pointer;
 }
 .submitButtons span{
@@ -67,7 +69,8 @@ input[type=number]:focus{
 }
 
 .infoBox{
-    display: inline-block;
+    z-index: 10;
+    display: inline-grid;
     font-size: 17px;
     font-weight: 500;
     width: 1%;
@@ -95,5 +98,69 @@ input[type=number]:focus{
     border: 1px solid #63D471;
     border-radius: 4px;
     width: 20vh;
-    transition: all 0.8s;
+    transition: all 1s;
+    animation-name: infoTextAnimation;
+    animation-duration: 3s;
+}
+
+@keyframes infoTextAnimation {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+@keyframes buttonToDown {
+    from{
+        transform: translateY(0);
+    }
+    to{
+        transform: translateY(25%);
+    }
+
+}
+
+@media(max-width: 1700px){
+    .infoText{
+        display: flex;
+        width: 25%;
+        margin: auto;
+        position: unset;
+        top: unset;
+        right: unset;
+    }
+}
+
+
+@media(max-width: 1024px){
+    .infoBox{
+        margin-left: 2%;
+        width: 2%;
+    }
+    .infoText{
+        margin-top: 5%;
+        display: inline-grid;
+        width: 40%;
+    }
+}
+@media(max-width: 767px){
+    .infoBox{
+        width: 3%;
+    }
+}
+
+@media(max-width: 650px){
+    .infoText{
+        width: 60%;
+    }
+    .infoBox{
+        width: 4%;
+    }
+}
+@media(max-width: 455px){
+    .infoBox{
+        width: 5%;
+    }
 }

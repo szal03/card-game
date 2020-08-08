@@ -75,3 +75,38 @@ flex-direction: column;
     border-right-color: #233329;
   }
 }
+@media(max-width: 1024px) {
+  .modeGameContainer{
+    width: 60%;
+  }
+  .buttonsContainer button{
+
+  }
+
+}
+
+@media(max-width: 757px){
+  .modeGameContainer{
+    width: 80%;
+  }
+}
+
+@media(max-width: 600px){
+  .modeGameContainer{
+    width: 90%;
+  }
+}
+
+@media(max-width: 460px){
+  .modeGameContainer{
+    border:none;
+    animation: none;
+  }
+  .AppContent h1{
+    font-size: 30px;
+  }
+  .buttonsContainer button{
+    width: 70%;
+    font-size: 18px;
+  }
+}

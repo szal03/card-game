@@ -18,7 +18,8 @@ class MultiPlayerMode extends React.Component{
             persianEye:false,
             remis: false,
             infoShow: false,
-            summaryCardShow:false
+            summaryCardShow:false,
+            showAlert:false,
         }
     }
 
@@ -169,6 +170,11 @@ class MultiPlayerMode extends React.Component{
         else if(selectUserPoints>=22 && selectUserAsTable.length!==2){
             selectUserGameWin=false;
             selectUserActiveStatus=false;
+            if(selectUserActiveStatus===false && id+1!==usersTable.length){
+                this.setState({
+                    showAlert: true,
+                })
+            }
             usersTable[id].userPoints = selectUserPoints;
             usersTable[id].userCards = selectUserCards;
             usersTable[id].asTable=selectUserAsTable;
@@ -352,9 +358,23 @@ class MultiPlayerMode extends React.Component{
         })
     }
 
+    handleButtonCloseAlert=()=>{
+        this.setState({
+            showAlert: false,
+        })
+    }
+
     render(){
         const {backButton} = this.props;
-        const {submit, gameStart, usersTable, gameEnd, gameWiner, persianEye, remis,infoShow, summaryCardShow}=this.state;
+        const {submit,
+            gameStart,
+            usersTable,
+            gameEnd,
+            gameWiner,
+            persianEye,
+            remis,infoShow,
+            summaryCardShow,
+            showAlert}=this.state;
 
         return(
             <div>
@@ -377,10 +397,10 @@ class MultiPlayerMode extends React.Component{
                                value={this.state.numberOfUsers}
                                onChange={this.handleChange}
                                disabled={submit}/>
-                            <div className="infoBox">
-                                <div className="infoInBox"
-                                onMouseEnter={() => this.handleShowInfo()}
-                                onMouseLeave={() =>this.handleHideInfo()}>
+                            <div className="infoBox"
+                                 onMouseEnter={() => this.handleShowInfo()}
+                                 onMouseLeave={() =>this.handleHideInfo()}>
+                                <div className="infoInBox">
                                     <span>i</span>
                                 </div>
                             </div>
@@ -391,12 +411,12 @@ class MultiPlayerMode extends React.Component{
                         <div className="buttonsContainer">
                             <button className="submitButtons"
                                     disabled={submit}
-                            style={infoShow && !submit? {  boxShadow: '0px 20px 20px 1px rgba(99, 212, 113, .5)'}:null}>
+                            style={infoShow && !submit? {  boxShadow: '0px 20px 20px 1px rgba(99, 212, 113, .5)', transform: 'translateY(25%)'}:null}>
                                 <span>Zatwierdź liczbę graczy</span></button>
                         </div>
 
                     </form>
-                    <div className="buttonsContainer">
+                    <div className="buttonsContainer" style={infoShow? {transform: 'translateY(25%)'}:null}>
                         <button className='modeButton' disabled={!submit} onClick={this.handleGameStart}><span>Rozpocznij Grę</span></button>
                         <button className='modeButtonBack' onClick={backButton}><span>Powrót do menu</span></button>
                     </div>
@@ -416,6 +436,8 @@ class MultiPlayerMode extends React.Component{
                             buttonShowCards={this.handleShowCards}
                             summaryCardShow={summaryCardShow}
                             buttonClose={this.handleButtonClose}
+                            showAlert={showAlert}
+                            buttonCloseAlert={this.handleButtonCloseAlert}
                             />
                     </div>}
                 </div>

@@ -39,7 +39,7 @@ const SingleGame=(props)=>{
                 <button className="gameButtons"
                         onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
                 </div>: null}
-            {computerWin? <div><h1>Wygrał Komputer</h1>
+            {computerWin? <div><h1>Wygrał Przeciwnik</h1>
                 <button className="gameButtons"
                         onClick={buttonPlayAgain}><span>Zagraj ponownie</span></button>
             </div>: null}
@@ -53,7 +53,7 @@ const SingleGame=(props)=>{
                     <PlayerCards cards={userCards}/>
                 </div>
                 <div className="playerScore">
-                    <span style={userPoints>21? {color: "red"}:null}>Wynik gracza: {userPoints}</span>
+                    <span style={userPoints>21 && !userWin? {color: "red"}:null}>Wynik gracza: {userPoints}</span>
                 </div>
                 <div className="userButtonsContainer">
                     <button className="gameButtons"
@@ -61,7 +61,7 @@ const SingleGame=(props)=>{
                             disabled={addButtonStatus}><span>Pobierz kartę</span></button>
                     <button className="gameButtons"
                             onClick={buttonPass}
-                            disabled={addButtonStatus}><span>Pass</span></button>
+                            disabled={addButtonStatus}><span>Pas</span></button>
                 </div>
 
             </div>
