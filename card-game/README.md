@@ -1,23 +1,28 @@
-##Gra karciana "Oczko"
+## Gra karciana "Oczko"
 
-####Wykorzystane technologie: HTML5, CSS, JavaScript, React
+#### Wykorzystane technologie: HTML5, CSS, JavaScript, React
 
-####Opis aplikacji:
+#### Opis aplikacji:
 
 Aplikacja opiera się na regułach gry karcianej "oczko".
 Po włączeniu aplikacji, użytkownik ma możliwość wyboru trybu gry między rozgrywką dla pojedyńczego gracza, a trybem dla wielu graczy.<br />
 <br />
 1.Tryb pojedyńczego gracza:
 <br />
-* 1.1 Po wybraniu trybu dla pojedyńczego gracza, użytkownik może rozpocząć rozgrywkę lub cofnąć się do wyboru między grą dla pojedyńczego gracza, a grą wieloosobową.<br/>
-* 1.21 Jeśli użytkownik wybierze opcje "Powrót do menu", powróci do menu głównego.
-* 1.22. W przypadku gdy użytkownik, wybierze przycisk "Rozpocznij grę", automatycznie uruchomi się gra. Na samym początku gracz i jego przeciwnik (komputer), otrzymują dwie wylosowane karty z talii. 
-Następnie gracz ma możliwość wyboru, czy chce dobrać kolejną kartę czy wybiera opcję "pas".
+* 1.1. Po wybraniu trybu dla pojedyńczego gracza, użytkownik może rozpocząć rozgrywkę lub cofnąć się do wyboru między grą dla pojedyńczego gracza, a grą wieloosobową.<br/>
+* 1.21. Jeśli użytkownik wybierze opcje "Powrót do menu", powróci do menu głównego.<br />
+* 1.22. W przypadku gdy użytkownik, wybierze przycisk "Rozpocznij grę", automatycznie uruchomi się gra. Na samym początku gracz i jego przeciwnik (komputer), otrzymują dwie wylosowane karty z talii. <br />
+Następnie gracz ma możliwość wyboru, czy chce dobrać kolejną kartę czy wybiera opcję "pas". <br />
+* 1.23. Jeśli  wybierze "Pobierz kartę", gracz otrzyma kolejną wylosowaną kartę. W przypadku, gdy gracz dobierze kolejną kartę i suma jego punktów będzie równa 21 gracz automatycznie wygra grę, jeśli natomiast suma punktów będzie większa lub równa 22 gracz automatycznie przegra rozgrywkę.<br />
+* 1.24. Jeśli spasuje, następi kolejka przeciwnika.<br />
+* 1.25 Po zakończeniu rozgrywki użytkownik ma możliwość zagrać ponownie.<br />
 
-<br />
-2.Tryb wieloosobowy:
-
-
+2.Tryb wieloosobowy:<br />
+* 2.1. Po wybraniu trybu dla wielu gracz, użytkownik ma możliwość wyboru liczby graczy. Minimalna liczba graczy wynosi 2 a maksymalna 4. Po dokonaniu wyboru liczby graczy, należy zatwierdzić liczbę graczy, a następnie użytkownik może rozpocząć rozgrywkę. Gra rozpocznie się od wylosowania kart dla każdego z graczy. Pierwszy, swoją kolejkę otrzyma gracz 1. <br />
+* 2.2. Będzie miał on możliwość doboru kolejnej karty lub spasowania.<br /> 
+* 2.21. Jeśli gracz dobierze kartę i suma jego punktów wyniesie 21, automatycznie zostanie zwyciężcą rozgrywki, jeżeli natomiast suma jego punktów będzie większa lub równa 22, wybrany gracz automatycznie przegra. Gracz zostanie o tym poinformowany, wówczas swoją kolejkę otrzyma kolejny z graczy.<br />
+* 2.22. Jeśli gracz spasuje, automatycznie następny gracz otrzyma swoją kolejkę.<br />
+* 2.3 W przypadku gdy, żaden z graczy nie wygra wcześniej, zwyciężcą rozgrywki zostanie ten gracz, który osiągnie wynik najbardziej zbliżony do liczby 21.<br />
 
 
 ============================================================
