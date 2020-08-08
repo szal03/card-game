@@ -88,3 +88,30 @@
     color: #63D471;
     transition: 0.4s;
 }
+
+@media(max-width: 900px){
+    .imgBox img{
+        width: 18vh;
+    }
+}
+@media(max-width: 767px){
+    .backButtonBox{
+        display: inline-block;
+    }
+}
+@media(max-width: 600px){
+    .imgBox{
+        width: 7%;
+    }
+    .imgBox img{
+        width: 16vh;
+    }
+}
+@media(max-width: 500px){
+    .imgBox{
+        width: 8%;
+    }
+    .imgBox img{
+        width: 14vh;
+    }
+}

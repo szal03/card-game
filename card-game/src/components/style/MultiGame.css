@@ -62,7 +62,7 @@ display: inherit;
     padding: 15px;
     transition: all 0.8s;
     cursor: pointer;
-    width: 10%;
+    width: 25%;
 }
 .closeCardsButton span{
     cursor: pointer;
@@ -133,7 +133,7 @@ display: inherit;
     padding: 20px;
     transition: all 0.8s;
     cursor: pointer;
-    width: 40%;
+    width: 60%;
     margin: auto;
 }
 .gameButtonsInRow span{
@@ -191,5 +191,57 @@ display: inherit;
         border-bottom-color: white;
         border-left-color: #233329;
         border-right-color: #233329;
+    }
+}
+
+
+@media(max-width: 1200px){
+    .playerSummaryRow{
+        width: 70%;
+    }
+}
+
+@media(max-width: 1024px){
+  .playersTable{
+      position: unset;
+      top: unset;
+      right: unset;
+      width: 60%;
+      margin:auto;
+      margin-top: 5%;
+      margin-bottom: 5%;
+  }
+
+    .gameButtonsInRow{
+        width: 60%;
+    }
+    .alertConstent {
+        width: 60%;
+    }
+    .closeCardsButton{
+        width: 30%;
+    }
+}
+
+@media(max-width: 770px){
+    .gameButtonsInRow{
+        font-size: 18px;
+    }
+    .alertConstent span{
+        font-size: 21px !important;
+    }
+}
+
+@media(max-width: 650px){
+    .gameButtonsInRow{
+        width: 80%;
+    }
+    .closeCardsButton{
+        width: 50%;
+    }
+}
+@media(max-width: 560px){
+    .alertConstent span{
+        font-size: 18px !important;
     }
 }
